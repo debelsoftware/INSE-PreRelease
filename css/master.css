@@ -1,0 +1,165 @@
+@import url('https://fonts.googleapis.com/css?family=Lato|Maven+Pro:700|Roboto');
+@font-face {
+    font-family: 'gilroy-extrabold';
+    src: url('../fonts/gilroy-extrabold-webfont.woff2') format('woff2'),
+         url('../fonts/gilroy-extrabold-webfont.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+}
+
+/*
+
+    font-family: 'Roboto', sans-serif;
+    font-family: 'Maven Pro', sans-serif;
+    font-family: 'Lato', sans-serif;
+
+*/
+:root{
+  --mainColor: #2f4054;
+  --secondaryColor: #2eb0ff;
+}
+html{
+  background-color: #F8FAFF;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+}
+body{
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+.desktop-nav{
+  display: grid;
+  grid-template-columns: 5fr 1fr;
+  grid-template-rows: ;
+  grid-template-areas: ". .";
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: 95%;
+  max-width: 1150px;
+  text-align: left;
+  padding: 20px 0 8px 0px;
+}
+.user-options{
+  text-align: right;
+
+}
+.user-options>img{
+  width: 28px;
+  margin-left: 10px;
+}
+.navigation>a{
+  text-decoration: none;
+  color: var(--mainColor);
+  font-family: 'gilroy-extrabold';
+  vertical-align: middle;
+  margin: 0 5px 0 5px;
+  white-space: nowrap;
+}
+h1{
+  font-family: 'gilroy-extrabold';
+  color: var(--mainColor);
+}
+h2{
+  font-family: 'gilroy-extrabold';
+  color: var(--mainColor);
+}
+h3{
+  font-family: 'gilroy-extrabold';
+  color: var(--mainColor);
+}
+p{
+  font-family: 'Roboto', sans-serif;
+  color: var(--mainColor);
+}
+ul>h1{
+  margin: 10px;
+}
+li{
+  vertical-align: middle;
+  margin: 10px;
+  font-family: 'Roboto', sans-serif;
+  color: var(--mainColor);
+}
+main{
+  margin: 10px auto 0 auto;
+  padding: 25px;
+  max-width: 1150px;
+  text-align: left;
+}
+.nav-logo{
+  width: 100px;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+.mobile-nav{
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 99999999;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(255, 255, 255, 0.8);
+}
+.mobile-nav>a{
+  background-color: var(--mainColor);
+  display: block;
+  margin: 10px 0 10px 0;
+  padding: 15px 0 15px 0;
+  text-decoration: none;
+  color: white;
+  font-family: 'gilroy-extrabold';
+}
+.card{
+  position: relative;
+  display: inline-block;
+  transition: all 0.2s;
+  background-color: white;
+  border-radius: 3px;
+  border-top: 12px solid var(--mainColor);
+  width: 100%;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  margin: auto;
+}
+#menu-icon{
+  display: none;
+  vertical-align: middle;
+  padding: 0 10px 0 10px;
+}
+#menu-icon:hover{
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 3px;
+  cursor: pointer;
+}
+@media (max-width: 300px){
+
+}
+@media (max-width: 450px){
+
+}
+@media (max-width: 780px){
+  .desktop-nav{
+    display: block;
+    position: fixed;
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    padding: 5px 0 5px 10px;
+  }
+  .user-options{
+    display: none;
+  }
+  .navigation>a{
+    display: none;
+  }
+  #menu-icon{
+    display: inline;
+  }
+}

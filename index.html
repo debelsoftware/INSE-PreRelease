@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <link rel="apple-touch-icon" sizes="180x180" href="./icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./icons/favicon-16x16.png">
+    <link rel="manifest" href="./icons/site.webmanifest">
+    <link rel="mask-icon" href="./icons/safari-pinned-tab.svg" color="#2eb0ff">
+    <meta name="msapplication-TileColor" content="#2eb0ff">
+    <meta name="theme-color" content="#2eb0ff">
+    <link rel="stylesheet" href="./css/login.css">
+    <meta name="google-signin-scope" content="profile">
+    <meta name="google-signin-client_id" content="353118485015-qerafpisj7krrpuhsuivb7066j3q06d0.apps.googleusercontent.com">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <title>Team Maker - Team Management</title>
+  </head>
+  <body>
+    <img class="large-logo" src="./img/makertextonly.svg" alt="">
+    <div class="login-box">
+      <h1>Welcome</h1>
+      <p id="instruct">Please sign in with Google</p>
+      <div id="googlelogin" class="g-signin2" data-onsuccess="onSignIn" data-theme="light"></div>
+      <p id="support">Support: seal@teammaker.app</p>
+    </div>
+    <script>
+      function onSignIn(googleUser) {
+        let profile = googleUser.getBasicProfile();
+        //profile.getId());
+        //profile.getName());
+        //profile.getGivenName());
+        //profile.getFamilyName());
+        //profile.getImageUrl());
+        let id_token = googleUser.getAuthResponse().id_token;
+        window.googlelogin.style.display = "none";
+        window.instruct.textContent = "Sorry " + profile.getGivenName() +", Team Maker isn't quite ready yet but we'll be adding features to the site as we make them."
+      };
+    </script>
+  </body>
+</html>
