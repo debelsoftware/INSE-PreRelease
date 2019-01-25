@@ -1,0 +1,18 @@
+.task-details{
+  margin: 10px 0 20px 0;
+}
+.task-details>p{
+  margin: 0;
+}
+.task-details>h1{
+  margin: 10px 0 0 0;
+}
+#google-drive-upload{
+  background-color: var(--secondaryColor);
+  border: 0;
+  border-radius: 3px;
+  margin: 0 20px 10px 20px;
+  padding: 10px;
+  color: white;
+  font-family: 'gilroy-extrabold';
+}
