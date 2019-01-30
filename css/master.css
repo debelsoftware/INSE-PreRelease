@@ -93,6 +93,12 @@ main{
   max-width: 1150px;
   text-align: left;
 }
+#blue-button{
+  background-color: var(--secondaryColor);
+  padding: 7px;
+  border-radius: 5px;
+  color: white;
+}
 .nav-logo{
   width: 100px;
   margin-right: 10px;

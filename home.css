@@ -1,6 +1,6 @@
 main{
   text-align: center;
-  margin-top: 50px;
+  margin-top: 10px;
 }
 .pic-and-text{
   display: grid;
@@ -9,7 +9,7 @@ main{
   grid-template-areas: ". .";
   grid-gap: 20px;
   width: 80%;
-  margin: 0 auto 80px auto;
+  margin: 40px auto 80px auto;
 }
 .pic-and-text>img{
   width: 100%;
@@ -21,6 +21,22 @@ main{
   background-size: cover;
   background-repeat: no-repeat;
   background-position: right;
+}
+.top-banner{
+  background-image: url('./img/grade.svg');
+  background-position: bottom;
+  background-size: cover;
+  background-repeat: no-repeat;
+  max-width: 2000px;
+  margin: auto;
+}
+.banner-contain{
+  display: inline-block;
+  margin: 90px auto 90px auto;
+}
+.banner-contain>h1,.banner-contain>p{
+  margin: 20px;
+  text-shadow: 0 1px 3px white;
 }
 #pt-image1{
   background-image: url('./img/teaching.svg');
@@ -36,7 +52,7 @@ main{
 @media (max-width: 780px){
   .pic-and-text{
     display: grid;
-    grid-template-columns: ;
+    grid-template-columns: 1fr;
     grid-template-rows: 1fr 1fr;
     grid-template-areas: "." ".";
     grid-gap: 20px;

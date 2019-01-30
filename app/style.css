@@ -84,30 +84,6 @@ progress::-moz-progress-bar{
   background-color: white;
   border-radius: 5px;
 }
-.profile-pic{
-  display: inline-block;
-  width: 20px;
-  margin: 5px;
-  vertical-align: middle;
-  border-radius: 360px;
-  background-color: #d6d6d6;
-  padding: 5px;
-}
-#me{
-  background-color: #e01f7c;
-}
-#me1{
-  background-color: #3bd67e;
-}
-#me2{
-  background-color: #ddd146;
-}
-#me3{
-  background-color: #66d3ff;
-}
-#me4{
-  background-color: #f89eff;
-}
 .complete{
   border-top: 12px solid #a8ea56;
 }
