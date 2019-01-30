@@ -1,0 +1,44 @@
+main{
+  text-align: center;
+  margin-top: 50px;
+}
+.pic-and-text{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: ;
+  grid-template-areas: ". .";
+  grid-gap: 20px;
+  width: 80%;
+  margin: 0 auto 80px auto;
+}
+.pic-and-text>img{
+  width: 100%;
+}
+.pt-text{
+  text-align: left;
+}
+.pt-image{
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: right;
+}
+#pt-image1{
+  background-image: url('./img/teaching.svg');
+}
+#pt-image2{
+  background-image: url('./img/brainstorming.svg');
+  background-position: top;
+}
+#pt-image3{
+  background-image: url('./img/board.svg');
+}
+
+@media (max-width: 780px){
+  .pic-and-text{
+    display: grid;
+    grid-template-columns: ;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas: "." ".";
+    grid-gap: 20px;
+  }
+}
