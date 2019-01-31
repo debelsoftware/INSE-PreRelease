@@ -30,6 +30,7 @@
       </div>
     </nav>
     <nav id="mobile-nav" class="mobile-nav">
+      <button type="button" id="close-menu" class="mobile-nav-exit" name="button">Close</button>
       <a href="#">Create a Task</a>
       <a href="#">Members</a>
       <a href="#">Timetable</a>
@@ -48,21 +49,21 @@
       </section>
       <h2>Team Deadlines:</h2>
       <section class="work-wall">
-        <div class="deadline-card">
+        <a class="deadline-card" href="../task">
           <h1>Make The SRS Document</h1>
           <p class="due-date">Due: 07/12/18 19:00</p>
           <progress value="30" max="100"></progress>
-        </div>
-        <div class="deadline-card complete">
+        </a>
+        <a class="deadline-card complete" href="../task">
           <h1>Complete SRS Interviews</h1>
           <p class="due-date">Due: 29/11/18 12:00</p>
           <progress value="100" max="100"></progress>
-        </div>
-        <div class="deadline-card">
+        </a>
+        <a class="deadline-card" href="../task">
           <h1>Get some other stuff done</h1>
           <p class="due-date">Due: 21/12/18 19:00</p>
           <progress value="5" max="100"></progress>
-        </div>
+        </a>
       </section>
     </main>
     <div class="chat-popup" id="chat">
@@ -86,4 +87,5 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js" charset="utf-8"></script>
   <script src="../js/maker.js" charset="utf-8"></script>
   <script src="../js/chat.js" charset="utf-8"></script>
+  <script src="../js/gui.js" charset="utf-8"></script>
 </html>

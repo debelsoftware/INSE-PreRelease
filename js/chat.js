@@ -1,3 +1,16 @@
+document.getElementById('chat-button').addEventListener('click', toggleChat);
+document.getElementById('chat-close').addEventListener('click', toggleChat);
+
+function toggleChat(){
+  const chat = document.getElementById('chat');
+  if (chat.style.display == "grid"){
+    chat.style.display = 'none';
+  }
+  else{
+    chat.style.display = 'grid';
+  }
+}
+
 let socket = io.connect('https://makerapi.host');
 let room = "demoroom";
 let canSend = false;

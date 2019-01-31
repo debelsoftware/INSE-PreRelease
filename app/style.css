@@ -18,6 +18,7 @@ li{
   background: linear-gradient()
 }
 .deadline-card{
+  text-decoration: none;
   position: relative;
   display: inline-block;
   transition: all 0.2s;
@@ -27,6 +28,7 @@ li{
   width: 100%;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   margin: 0px;
+  z-index: 0;
 }
 .deadline-card:hover{
   border-top: 12px solid var(--secondaryColor);

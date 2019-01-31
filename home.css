@@ -43,9 +43,13 @@ main{
 }
 #pt-image2{
   background-image: url('./img/brainstorming.svg');
+  background-position: top;
 }
 #pt-image3{
   background-image: url('./img/board.svg');
+}
+footer{
+  margin-bottom: 50px;
 }
 
 @media (max-width: 780px){

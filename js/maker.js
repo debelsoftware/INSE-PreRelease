@@ -1,22 +1,3 @@
-document.getElementById('chat-button').addEventListener('click', toggleChat);
-document.getElementById('chat-close').addEventListener('click', toggleChat);
-document.getElementById('menu-icon').addEventListener('click', openMobileNav)
-
-function toggleChat(){
-  const chat = document.getElementById('chat');
-  if (chat.style.display == "grid"){
-    chat.style.display = 'none';
-  }
-  else{
-    chat.style.display = 'grid';
-  }
-}
-
-function openMobileNav(){
-  const nav = document.getElementById('mobile-nav');
-  nav.style.display = "block";
-}
-
 let developerKey = 'AIzaSyDLgVzfFEI-nJtVbH7hYH-xlZl3pfuTR6Y';
 let clientId = "353118485015-qerafpisj7krrpuhsuivb7066j3q06d0.apps.googleusercontent.com"
 let appId = "353118485015";
