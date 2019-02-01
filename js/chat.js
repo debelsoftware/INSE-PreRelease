@@ -50,24 +50,65 @@ function init(){
   socket.emit('joinroom', room);
 }
 
+function sendImage(url){
+  socket.emit('image', {
+    room: room,
+    data: url
+  });
+  let e = document.createElement('div');
+  e.innerHTML = "<div class='message self'><img class='message-image'></div>";
+  e.getElementsByClassName("message-image")[0].src = url;
+  document.getElementById('messages').appendChild(e.firstChild);
+  document.getElementById('messages').scrollTop = document.getElementById('messages').scrollHeight;
+  document.getElementById('message-input').value = "";
+}
+
 function send(){
   let message = document.getElementById('message-input').value;
-  if (canSend == true){
-    if (charLimitCheck(message)){
-      socket.emit('message', {
-        room: room,
-        data: document.getElementById('message-input').value
+  if (message.startsWith("giphy")) {
+    fetch('http://api.giphy.com/v1/gifs/random?api_key=dgVZUC6x9W9oxcuciT07xrWd9TykE1EH&tag=' + message.substr(message.indexOf(" ") + 1))
+      .then(
+        function(response) {
+          if (response.status !== 200) {
+            console.log('Looks like there was a problem. Status Code: ' +
+              response.status);
+            return;
+          }
+
+          response.json().then(function(data) {
+            if (data.data.image_original_url) {
+              sendImage(data.data.image_original_url);
+            }
+            else {
+              alert("Failed to get that GIF");
+              document.getElementById('message-input').value = "";
+            }
+
+          });
+        }
+      )
+      .catch(function(err) {
+        console.log('Fetch Error :-S', err);
       });
-      let e = document.createElement('div');
-      e.innerHTML = "<div class='message self'><p class='message-text'></p></div>";
-      e.getElementsByClassName("message-text")[0].textContent = document.getElementById('message-input').value;
-      document.getElementById('messages').appendChild(e.firstChild);
-      document.getElementById('messages').scrollTop = document.getElementById('messages').scrollHeight;
-      document.getElementById('message-input').value = "";
-      canSend = false;
-    }
-    else {
-      alert('messages must be less than 100 characters');
+  }
+  else {
+    if (canSend == true){
+      if (charLimitCheck(message)){
+        socket.emit('message', {
+          room: room,
+          data: document.getElementById('message-input').value
+        });
+        let e = document.createElement('div');
+        e.innerHTML = "<div class='message self'><p class='message-text'></p></div>";
+        e.getElementsByClassName("message-text")[0].textContent = document.getElementById('message-input').value;
+        document.getElementById('messages').appendChild(e.firstChild);
+        document.getElementById('messages').scrollTop = document.getElementById('messages').scrollHeight;
+        document.getElementById('message-input').value = "";
+        canSend = false;
+      }
+      else {
+        alert('messages must be less than 100 characters');
+      }
     }
   }
 }
@@ -76,6 +117,14 @@ socket.on('message',function(data){
   let e = document.createElement('div');
   e.innerHTML = "<div class='message'><img class='profile-pic' src='../img/makersealonly.svg' id='me4'><p class='message-text'></p><span class='message-info'>Anon</span></div>";
   e.getElementsByClassName("message-text")[0].textContent = data;
+  document.getElementById('messages').appendChild(e.firstChild);
+  document.getElementById('messages').scrollTop = document.getElementById('messages').scrollHeight;
+});
+
+socket.on('image',function(data){
+  let e = document.createElement('div');
+  e.innerHTML = "<div class='message'><img class='profile-pic' src='../img/makersealonly.svg' id='me4'><img class='message-image'><span class='message-info'>Anon Powered by GIPHY</span></div>";
+  e.getElementsByClassName("message-image")[0].src = data;
   document.getElementById('messages').appendChild(e.firstChild);
   document.getElementById('messages').scrollTop = document.getElementById('messages').scrollHeight;
 });
