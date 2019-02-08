@@ -65,8 +65,8 @@ function sendImage(url){
 
 function send(){
   let message = document.getElementById('message-input').value;
-  if (message.startsWith("giphy")) {
-    fetch('http://api.giphy.com/v1/gifs/random?api_key=dgVZUC6x9W9oxcuciT07xrWd9TykE1EH&tag=' + message.substr(message.indexOf(" ") + 1))
+  if (message.toLowerCase().startsWith("giphy")) {
+    fetch('https://api.giphy.com/v1/gifs/random?api_key=dgVZUC6x9W9oxcuciT07xrWd9TykE1EH&tag=' + message.substr(message.indexOf(" ") + 1))
       .then(
         function(response) {
           if (response.status !== 200) {

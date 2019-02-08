@@ -48,6 +48,9 @@ main{
 #pt-image3{
   background-image: url('./img/board.svg');
 }
+#pt-image4{
+  background-image: url('./img/sealmountain.svg');
+}
 footer{
   margin-bottom: 50px;
 }
