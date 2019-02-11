@@ -56,8 +56,8 @@ function sendImage(url){
     data: url
   });
   let e = document.createElement('div');
-  e.innerHTML = "<div class='message self'><img class='message-image'></div>";
-  e.getElementsByClassName("message-image")[0].src = url;
+  e.innerHTML = "<div class='message self'><img class='self-message-image'><span class='message-info'>Powered by GIPHY</span></div>";
+  e.getElementsByClassName("self-message-image")[0].src = url;
   document.getElementById('messages').appendChild(e.firstChild);
   document.getElementById('messages').scrollTop = document.getElementById('messages').scrollHeight;
   document.getElementById('message-input').value = "";
