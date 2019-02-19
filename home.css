@@ -23,6 +23,7 @@ main{
   background-position: right;
 }
 .top-banner{
+  position: relative;
   background-image: url('./img/grade.svg');
   background-position: bottom;
   background-size: cover;

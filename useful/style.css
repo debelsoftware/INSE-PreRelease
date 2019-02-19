@@ -1,0 +1,39 @@
+li{
+  vertical-align: middle;
+  margin: 10px;
+  font-family: font-family: 'Roboto', sans-serif;
+  color: var(--mainColor);
+  display: inline;
+  white-space: nowrap;
+}
+.useful-apps{
+  text-align: center;
+}
+.useful-apps>ul{
+  text-align: center;
+  border-top: 15px solid var(--mainColor);
+  width: 100%;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+  padding: 0;
+  display: block;
+  list-style: none;
+  vertical-align: middle;
+  background-color: white;
+  border-radius: 5px;
+}
+.app-logo{
+  transition: all 0.2s;
+  vertical-align: middle;
+  width: 80px;
+  height: 80px;
+  margin: 10px;
+  background-color: white;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  border-radius: 360px;
+  padding: 10px;
+}
+.app-logo:hover{
+  cursor: pointer;
+  transform: scale(1.02);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
