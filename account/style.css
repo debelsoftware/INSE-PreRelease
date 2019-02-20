@@ -1,0 +1,33 @@
+.groups{
+  text-align: center;
+  padding: 20px;
+}
+.group{
+  text-decoration: none;
+  position: relative;
+  display: inline-block;
+  transition: all 0.2s;
+  background-color: white;
+  border-radius: 3px;
+  width: 100%;
+  border-top: 7px solid var(--mainColor);
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  margin: 10px 0 10px 0;
+  padding: 0;
+  z-index: 0;
+}
+.group:hover{
+  border-top: 12px solid var(--secondaryColor);
+  transform: translateY(-5px);
+  box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+.group h1{
+  vertical-align: middle;
+  padding: 0;
+  margin: 10px;
+  font-size: 25px;
+}
+.current{
+  border-top: 7px solid var(--secondaryColor);
+}

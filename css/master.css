@@ -47,18 +47,21 @@ body{
   padding: 20px 0 20px 0px;
 }
 .user-options{
+  padding-top: 8px;
   text-align: right;
-
 }
-.user-options>img{
+.user-options>a{
   width: 28px;
   margin-left: 10px;
+}
+.user-options a>img{
+  width: 28px;
 }
 .navigation>a{
   text-decoration: none;
   color: var(--mainColor);
   font-family: 'gilroy-extrabold';
-  vertical-align: middle;
+  vertical-align: bottom;
   margin: 0 5px 0 5px;
   white-space: nowrap;
 }
@@ -381,6 +384,9 @@ main{
   }
   .navigation>a{
     display: none;
+  }
+  #logolink{
+    display: inline-block;
   }
   #menu-icon{
     display: inline;
