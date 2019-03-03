@@ -45,7 +45,7 @@ let io = socket(httpsServer);
 
 io.on('connection', function(socket){
   socket.on('joinroom', function(data){
-    socket.join(data)
+    socket.join(data);
   })
   socket.on('message', function(data){
     let namespace = socket.handshake.address;

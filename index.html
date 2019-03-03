@@ -69,5 +69,16 @@
       <p>If you found our advert in meeting room 2, please don't remove it. 😀</p>
     </footer>
   </body>
-  <script src="./js/gui.js" charset="utf-8"></script>
+  <script type="text/javascript">
+    document.getElementById('menu-icon').addEventListener('click', openMobileNav)
+    document.getElementById('close-menu').addEventListener('click', closeMobileNav)
+    function openMobileNav(){
+      const nav = document.getElementById('mobile-nav');
+      nav.style.display = "block";
+    }
+    function closeMobileNav(){
+      const nav = document.getElementById('mobile-nav');
+      nav.style.display = "none";
+    }
+  </script>
 </html>

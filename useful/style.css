@@ -21,6 +21,17 @@ li{
   background-color: white;
   border-radius: 5px;
 }
+.useful-apps select{
+  display: block;
+  margin: auto;
+  padding: 10px;
+  border: 3px solid var(--mainColor);
+  width: 90%;
+  max-width: 400px;
+  font-family: 'gilroy-extrabold';
+  color: var(--mainColor);
+  font-size: 15px;
+}
 .app-logo{
   transition: all 0.2s;
   vertical-align: middle;
