@@ -13,31 +13,22 @@
     <meta name="msapplication-config" content="../icons/browserconfig.xml">
     <meta name="theme-color" content="#2eb0ff">
     <link rel="stylesheet" href="./style.css">
-    <meta name="google-signin-scope" content="profile">
-    <meta name="google-signin-client_id" content="353118485015-qerafpisj7krrpuhsuivb7066j3q06d0.apps.googleusercontent.com">
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
-    <title>Team Maker - Team Management</title>
+    <title>Team Maker - Select your team</title>
   </head>
   <body>
     <img class="large-logo" src="../img/makertextonly.svg" alt="">
     <div class="login-box">
-      <h1>Welcome</h1>
-      <p id="instruct">Please sign in with Google</p>
-      <div id="googlelogin" class="g-signin2" data-onsuccess="onSignIn" data-theme="light"></div>
-      <p id="support">Support: seal@teammaker.app</p>
+      <h1>Your Teams</h1>
+      <div id="teams">
+        <img src="../img/loading.svg" alt="">
+        <p>Finding your teams, just a sec...</p>
+      </div>
+      <hr>
+      <h3>Join a team</h3>
+      <input type="text" name="" placeholder="Team ID eg. team_maker2019" value="">
+      <button type="button" name="button">Join</button>
+      <p id="sub">To create a team, <span>click here</span></p>
     </div>
-    <script>
-      function onSignIn(googleUser) {
-        let profile = googleUser.getBasicProfile();
-        //profile.getId());
-        //profile.getName());
-        //profile.getGivenName());
-        //profile.getFamilyName());
-        //profile.getImageUrl());
-        let id_token = googleUser.getAuthResponse().id_token;
-        console.log(id_token);
-        window.location.href = "../teamselect?token="+id_token;
-      };
-    </script>
+    <script src="./teamselect.js" charset="utf-8"></script>
   </body>
 </html>

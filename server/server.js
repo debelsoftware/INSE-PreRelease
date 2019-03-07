@@ -3,11 +3,15 @@ const socket = require('socket.io');
 const fs = require('fs');
 const http = require('http');
 const https = require('https');
-const FastRateLimit = require("fast-ratelimit").FastRateLimit;
-var messageLimiter = new FastRateLimit({
+const mysql = require('mysql2');
+const bodyParser = require('body-parser')
+const {OAuth2Client} = require('google-auth-library');
+const client = new OAuth2Client('353118485015-qerafpisj7krrpuhsuivb7066j3q06d0.apps.googleusercontent.com');
+//const FastRateLimit = require("fast-ratelimit").FastRateLimit;
+/*var messageLimiter = new FastRateLimit({
   threshold : 10,
   ttl       : 60
-});
+});*/
 
 const privateKey = fs.readFileSync('./sslcert/privkey.pem', 'utf8');
 const certificate = fs.readFileSync('./sslcert/cert.pem', 'utf8');
@@ -20,6 +24,7 @@ const credentials = {
 };
 
 let app = express();
+app.use(bodyParser.json());
 
 const httpServer = http.createServer(app);
 const httpsServer = https.createServer(credentials, app);
@@ -31,6 +36,59 @@ httpServer.listen(80, () => {
 httpsServer.listen(443, () => {
 	console.log('HTTPS Server running on port 443');
 });
+
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
+// --------------- ROUTES -----------------
+app.post('/userteams', getUserTeams);
+
+// ----------------------------------------
+
+// -------------- MAKER API --------------
+
+async function verify(token) {
+  try{
+    let ticket = await client.verifyIdToken({
+        idToken: token,
+        audience: '353118485015-qerafpisj7krrpuhsuivb7066j3q06d0.apps.googleusercontent.com',
+    });
+    let payload = ticket.getPayload();
+    let userid = payload['sub'];
+    let profilePic = payload['picture'];
+    let name = payload['name']
+    return [userid, profilePic, name, payload];
+  }
+  catch(e){
+    return "error"
+  }
+}
+
+async function getUserTeams(req, res, next){
+  let googleData = await verify(req.body.token);
+  const connection = mysql.createConnection({
+    host: 'makerapi.host',
+    user: 'remote',
+    database: 'MAKER',
+    password: 'makerssecretrock'
+  });
+  connection.query(
+    'SELECT USERTEAMS.teamID, TEAMS.Name, USERTEAMS.verified, USERTEAMS.isAdmin FROM USERTEAMS INNER JOIN TEAMS ON USERTEAMS.teamID = TEAMS.teamID WHERE userID = '+googleData[0],
+    function(err, results, fields) {
+      if (err) {
+        res.sendStatus(418);
+      }
+      else {
+        res.json(results);
+      }
+    }
+  );
+}
+
+// -------------- CHAT CODE ---------------
 
 function charLimitCheck(data){
   if (data.length > 100){

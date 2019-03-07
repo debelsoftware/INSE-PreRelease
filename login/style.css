@@ -1,5 +1,11 @@
 @import url('https://fonts.googleapis.com/css?family=Lato|Maven+Pro:700|Roboto');
-
+@font-face {
+    font-family: 'gilroy-extrabold';
+    src: url('../fonts/gilroy-extrabold-webfont.woff2') format('woff2'),
+         url('../fonts/gilroy-extrabold-webfont.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+}
 /*
 
     font-family: 'Roboto', sans-serif;
@@ -26,7 +32,7 @@ body{
   text-align: center;
 }
 h1{
-  font-family: 'Maven Pro', sans-serif;
+  font-family: 'gilroy-extrabold';
   color: #2f4054;
 }
 p{
@@ -45,7 +51,6 @@ p{
   max-width: 450px;
   margin: 5px auto 30px auto;
   border-radius: 5px;
-  border-bottom: 12px solid #2eb0ff;
   box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
 }
 .g-signin2{
