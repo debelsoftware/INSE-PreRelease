@@ -64,10 +64,14 @@ hr{
   border-top: 7px solid #2f4054;
 }
 .team:hover{
-  transform: scale(1.01);
+  cursor: pointer;
+
 }
 .unverified{
   border-top: 7px solid #f4612c;
+}
+.admin{
+  border-top: 7px solid #2eb0ff;
 }
 button{
   background-color: #2eb0ff;
@@ -125,4 +129,41 @@ span:hover{
 #teamID{
   font-size: 10px;
   margin: 0;
+}
+@keyframes error {
+  0%{
+    top: -100vh;
+  }
+  100%{
+    top: 35vh;
+  }
+}
+.error-box{
+  display: none;
+  position: fixed;
+  animation-name: error;
+  animation-duration: 0.5s;
+  animation-fill-mode: both;
+  animation-timing-function: ease-in-out;
+  top: 30px;
+  left: 0;
+  right: 0;
+  width: 90%;
+  max-width: 550px;
+  margin: auto;
+  background-color: white;
+  border-radius: 3px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  border-top: 10px solid #2f4054;
+}
+.error-box img{
+  width: 100px;
+  margin: 0;
+}
+.error-box h3{
+  margin: 0 10px 0 10px;
+}
+#error-btn{
+  margin: 10px;
+  width: auto;
 }

@@ -76,10 +76,10 @@ async function getUserTeams(req, res, next){
     password: 'makerssecretrock'
   });
   connection.query(
-    'SELECT USERTEAMS.teamID, TEAMS.Name, USERTEAMS.verified, USERTEAMS.isAdmin FROM USERTEAMS INNER JOIN TEAMS ON USERTEAMS.teamID = TEAMS.teamID WHERE userID = '+googleData[0],
+    'SELECT USERTEAMS.teamID, TEAMS.name, USERTEAMS.verified, USERTEAMS.isAdmin FROM USERTEAMS INNER JOIN TEAMS ON USERTEAMS.teamID = TEAMS.teamID WHERE userID = '+googleData[0]+' ORDER BY USERTEAMS.verified DESC',
     function(err, results, fields) {
       if (err) {
-        res.sendStatus(418);
+        res.sendStatus(400);
       }
       else {
         res.json(results);
