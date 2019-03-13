@@ -52,6 +52,7 @@ app.use(function(req, res, next) {
 
 // --------------- ROUTES -----------------
 app.post('/userteams', getUserTeams);
+app.post('/tasks', getTasks);
 
 // ----------------------------------------
 
@@ -78,6 +79,21 @@ async function getUserTeams(req, res, next){
   let googleData = await verify(req.body.token);
   connection.query(
     'SELECT USERTEAMS.teamID, TEAMS.name, USERTEAMS.verified, USERTEAMS.isAdmin FROM USERTEAMS INNER JOIN TEAMS ON USERTEAMS.teamID = TEAMS.teamID WHERE userID = '+googleData[0]+' ORDER BY USERTEAMS.verified DESC',
+    function(err, results, fields) {
+      if (err) {
+        res.sendStatus(400);
+      }
+      else {
+        res.json(results);
+      }
+    }
+  );
+}
+
+async function getTasks(req, res, next){
+  //let googleData = await verify(req.body.token);
+  connection.query(
+    'SELECT taskID, name FROM TASKS WHERE teamID = "'+req.body.teamID+'"',
     function(err, results, fields) {
       if (err) {
         res.sendStatus(400);

@@ -95,7 +95,9 @@ progress::-moz-progress-bar{
   left: 0;
   right: 0;
 }
-
+.empty{
+  text-align: center;
+}
 @media (max-width: 750px){
   .work-wall{
     display: grid;
