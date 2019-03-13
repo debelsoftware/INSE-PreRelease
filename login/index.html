@@ -26,18 +26,6 @@
       <div id="googlelogin" class="g-signin2" data-onsuccess="onSignIn" data-theme="light"></div>
       <p id="support">Support: seal@teammaker.app</p>
     </div>
-    <script>
-      function onSignIn(googleUser) {
-        let profile = googleUser.getBasicProfile();
-        //profile.getId());
-        //profile.getName());
-        //profile.getGivenName());
-        //profile.getFamilyName());
-        //profile.getImageUrl());
-        let id_token = googleUser.getAuthResponse().id_token;
-        console.log(id_token);
-        window.location.href = "../teamselect?token="+id_token;
-      };
-    </script>
+    <script src="./login.js" charset="utf-8"></script>
   </body>
 </html>

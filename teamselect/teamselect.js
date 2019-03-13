@@ -1,8 +1,12 @@
-window.addEventListener("load", getTeams);
+window.addEventListener("load", init);
 
-const url = new URL(window.location);
-const token = url.searchParams.get("token");
+const token = sessionStorage.getItem('token');
 const host = "http://localhost/";
+
+function init(){
+  document.getElementById('username').textContent = sessionStorage.getItem('name');
+  getTeams();
+}
 
 function getTeams(){
   fetch(host+"userteams", {
@@ -33,10 +37,10 @@ function populateTeams(teams){
   else {
     for (team of teams){
       if (team.isAdmin == 1){
-        teamsbox.innerHTML += "<div class='team admin' onclick='goToTeam("+team.teamID+")'>"+team.name+"<p id='teamID'>"+team.teamID+"</p></div>";
+        teamsbox.innerHTML += "<div class='team admin' onclick='goToTeam(`"+team.teamID+"`)'>"+team.name+"<p id='teamID'>"+team.teamID+"</p></div>";
       }
       else if (team.verified == 1){
-        teamsbox.innerHTML += "<div class='team' onclick='goToTeam("'+team.teamID+"')'>"+team.name+"<p id='teamID'>"+team.teamID+"</p></div>";
+        teamsbox.innerHTML += "<div class='team' onclick='goToTeam(`"+team.teamID+"`)'>"+team.name+"<p id='teamID'>"+team.teamID+"</p></div>";
       }
       else {
         teamsbox.innerHTML += "<div class='team unverified' onclick='goToTeam(null)'>"+team.name+"<p id='teamID'>PENDING VERIFICATION</p></div>";
@@ -58,4 +62,8 @@ function showError(msg,button){
   document.getElementById("error-box").style.display = "block";
   document.getElementById("error-msg").textContent = msg;
   document.getElementById("error-btn").textContent = button;
+}
+
+function closeError(){
+  document.getElementById("error-box").style.display = "none";
 }

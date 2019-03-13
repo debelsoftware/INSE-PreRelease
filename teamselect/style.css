@@ -54,24 +54,27 @@ hr{
 .team{
   transition: all 0.2s;
   background-color: white;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
   padding: 10px;
   margin: auto;
   margin-bottom: 10px;
   font-family: 'gilroy-extrabold';
   color: #2f4054;
-  border-radius: 5px;
-  border-top: 7px solid #2f4054;
+  border-radius: 3px;
+  border-left: 10px solid #2f4054;
+  border-right: 10px solid #2f4054;
 }
 .team:hover{
   cursor: pointer;
 
 }
 .unverified{
-  border-top: 7px solid #f4612c;
+  border-left: 10px solid #f4612c;
+  border-right: 10px solid #f4612c;
 }
 .admin{
-  border-top: 7px solid #2eb0ff;
+  border-left: 10px solid #2eb0ff;
+  border-right: 10px solid #2eb0ff;
 }
 button{
   background-color: #2eb0ff;
@@ -82,6 +85,9 @@ button{
   width: 60px;
   font-family: 'gilroy-extrabold';
   outline: none;
+}
+button:hover{
+  cursor: pointer;
 }
 input{
   max-width: 200px;
@@ -135,7 +141,7 @@ span:hover{
     top: -100vh;
   }
   100%{
-    top: 35vh;
+    top: 50px;
   }
 }
 .error-box{
