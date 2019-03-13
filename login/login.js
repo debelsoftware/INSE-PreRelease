@@ -9,5 +9,7 @@ function onSignIn(googleUser) {
   console.log(id_token);
   sessionStorage.setItem('token', id_token);
   sessionStorage.setItem('name', profile.getName());
+  sessionStorage.setItem('fname', profile.getGivenName());
+  sessionStorage.setItem('lname', profile.getFamilyName());
   window.location.href = "../teamselect"
 };

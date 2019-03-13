@@ -1,9 +1,13 @@
 window.addEventListener("load", init);
+document.getElementById("username").addEventListener("click", signOut);
 
 const token = sessionStorage.getItem('token');
 const host = "http://localhost/";
 
 function init(){
+  gapi.load('auth2', function() {
+    gapi.auth2.init();
+  });
   document.getElementById('username').textContent = sessionStorage.getItem('name');
   getTeams();
 }
@@ -56,6 +60,18 @@ function goToTeam(teamID){
   else {
     window.location.href = "../app?teamid="+teamID;
   }
+}
+
+function signOut(){
+  let auth2 = gapi.auth2.getAuthInstance();
+  auth2.signOut().then(function () {
+    console.log('User signed out.');
+    sessionStorage.setItem("token","null");
+    sessionStorage.setItem("fname","Not Signed In");
+    sessionStorage.setItem("lname","Not Signed In");
+    sessionStorage.setItem("name","Click here to sign in");
+    document.location.href = "../login";
+  });
 }
 
 function showError(msg,button){

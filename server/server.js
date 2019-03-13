@@ -29,6 +29,13 @@ app.use(bodyParser.json());
 const httpServer = http.createServer(app);
 const httpsServer = https.createServer(credentials, app);
 
+const connection = mysql.createConnection({
+	host: 'makerapi.host',
+	user: 'remote',
+	database: 'MAKER',
+	password: 'makerssecretrock'
+});
+
 httpServer.listen(80, () => {
 	console.log('HTTP Server running on port 80');
 });
@@ -69,12 +76,6 @@ async function verify(token) {
 
 async function getUserTeams(req, res, next){
   let googleData = await verify(req.body.token);
-  const connection = mysql.createConnection({
-    host: 'makerapi.host',
-    user: 'remote',
-    database: 'MAKER',
-    password: 'makerssecretrock'
-  });
   connection.query(
     'SELECT USERTEAMS.teamID, TEAMS.name, USERTEAMS.verified, USERTEAMS.isAdmin FROM USERTEAMS INNER JOIN TEAMS ON USERTEAMS.teamID = TEAMS.teamID WHERE userID = '+googleData[0]+' ORDER BY USERTEAMS.verified DESC',
     function(err, results, fields) {
