@@ -38,7 +38,7 @@ function populateTasks(tasks){
   if (tasks.length == 0){
     wall.classList.remove("work-wall");
     wall.classList.add("empty");
-    wall.innerHTML = "<h3>No tasks found. Create one above<h3>"
+    wall.innerHTML = "<h3>No work for you today 🎉<h3><img id='coffee' src='../img/coffee.gif'>"
   }
   else {
     for (task of tasks){

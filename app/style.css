@@ -98,6 +98,10 @@ progress::-moz-progress-bar{
 .empty{
   text-align: center;
 }
+#coffee{
+  width: 70px;
+  margin: 0;
+}
 @media (max-width: 750px){
   .work-wall{
     display: grid;
