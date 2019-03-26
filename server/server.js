@@ -13,10 +13,10 @@ const client = new OAuth2Client('353118485015-qerafpisj7krrpuhsuivb7066j3q06d0.a
   ttl       : 60
 });*/
 
+/*-- SSL ENCRYPTION KEYS (MUST BE STORED IN 'sslcert' FOLDER) --*/
 const privateKey = fs.readFileSync('./sslcert/privkey.pem', 'utf8');
 const certificate = fs.readFileSync('./sslcert/cert.pem', 'utf8');
 const ca = fs.readFileSync('./sslcert/chain.pem', 'utf8');
-
 const credentials = {
 	key: privateKey,
 	cert: certificate,
@@ -26,9 +26,11 @@ const credentials = {
 let app = express();
 app.use(bodyParser.json());
 
+/*-- SERVER STARTERS (PORT 80 FOR DEBUG, PORT 443 FOR SECURE PRODUCTION CONNECTION) --*/
 const httpServer = http.createServer(app);
 const httpsServer = https.createServer(credentials, app);
 
+/*-- MYSQL CONNECTION (SERVER HOSTED AT makerapi.host) --*/
 const connection = mysql.createConnection({
 	host: 'makerapi.host',
 	user: 'remote',
@@ -44,6 +46,7 @@ httpsServer.listen(443, () => {
 	console.log('HTTPS Server running on port 443');
 });
 
+/*-- CROSS ORIGIN DOMAIN HEADERS (TO ALLOW teammaker.app TO COMMUNICATE WITH makerapi.host) --*/
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -58,6 +61,12 @@ app.post('/tasks', getTasks);
 
 // -------------- MAKER API --------------
 
+/*-- GOOGLE AUTH --
+	DESCRIPTION: converts the google token to a user id that we can store in the database.
+							Also gives us their user profile data such as profile pictures and names.
+	PARAMS: idToken
+	RETURNS: Array of user data including userid, profilePic and name
+*/
 async function verify(token) {
   try{
     let ticket = await client.verifyIdToken({
@@ -75,6 +84,14 @@ async function verify(token) {
   }
 }
 
+/*-- GET USER TEAMS --
+	DESCRIPTION: gets a list of teams that a user is associated with (even if not a memeber yet).
+							User token is converted through the google auth function to get a user id first.
+	PARAMS: req(the request data from the client, contains token)
+					res(handles response)
+					next(applys CORS headers)
+	RETURNS: JSON string of teams that the user is associated with
+*/
 async function getUserTeams(req, res, next){
   let googleData = await verify(req.body.token);
   connection.query(
@@ -90,6 +107,13 @@ async function getUserTeams(req, res, next){
   );
 }
 
+/*-- GET TASKS --
+	DESCRIPTION: Gets all of the tasks that a team have.
+	PARAMS: req(the request data from the client, contains token and teamID)
+					res(handles response)
+					next(applys CORS headers)
+	RETURNS: JSON string of tasks that are linked to the teamID provided
+*/
 async function getTasks(req, res, next){
   //let googleData = await verify(req.body.token);
   connection.query(
@@ -107,6 +131,11 @@ async function getTasks(req, res, next){
 
 // -------------- CHAT CODE ---------------
 
+/*-- charLimitCheck --
+	DESCRIPTION: checks the the length of data for a text message is under the system limit
+	PARAMS: data
+	RETURNS: BOOLEAN value (whether or not the text has passed validation)
+*/
 function charLimitCheck(data){
   if (data.length > 100){
     return false;
@@ -115,6 +144,14 @@ function charLimitCheck(data){
     return true;
   }
 }
+
+/*-- SOCKET.IO CONNECTIONS AND CHAT FUNCTIONS (all of below) --
+	DESCRIPTION: All of the functions below handle requests through the socket io connections.
+							These are designed to take the input from the users chat client and direct them
+							to the correct clients that the other team members are using.
+							User ids may be taken for some tasks, this is to validate the user and ensure
+							that the message being sent to a group is coming fom a genuine approved user.
+ --*/
 
 let io = socket(httpsServer);
 
