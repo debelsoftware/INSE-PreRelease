@@ -1,0 +1,14 @@
+highlight("click here")
+click ("click here")
+write ("helium-testing", into = "Enter team ID here...")
+write ("Helium-test", into = "Enter team name here...")
+highlight ("Create")
+click ("Create")
+if Alert("Team ID must not have special characters").exists():
+    Alert("Team ID must not have special characters").dismiss()
+    go_to ("teammaker.app/beta/createteam")
+    print("Success!")
+else:
+    print("Fail!")
+
+

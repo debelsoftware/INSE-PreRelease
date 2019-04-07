@@ -1,0 +1,97 @@
+@import url('https://fonts.googleapis.com/css?family=Lato|Maven+Pro:700|Roboto');
+@font-face {
+    font-family: 'gilroy-extrabold';
+    src: url('../fonts/gilroy-extrabold-webfont.woff2') format('woff2'),
+         url('../fonts/gilroy-extrabold-webfont.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+}
+/*
+
+    font-family: 'Roboto', sans-serif;
+    font-family: 'Maven Pro', sans-serif;
+    font-family: 'Lato', sans-serif;
+
+*/
+html{
+  background-color: #F8FAFF;
+  background-image: url("../img/grade.svg");
+  background-attachment: fixed;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: bottom;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  text-align: center;
+}
+body{
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  text-align: center;
+}
+h1{
+  font-family: 'gilroy-extrabold';
+  color: #2f4054;
+}
+p{
+  font-family: 'Roboto', sans-serif;
+  color: #2f4054;
+}
+.large-logo{
+  margin: 30px auto 30px auto;
+  width: 70%;
+  max-width: 300px;
+}
+.login-box{
+  background-color: white;
+  padding: 20px;
+  width: 70%;
+  max-width: 450px;
+  margin: 5px auto 30px auto;
+  border-radius: 5px;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+}
+.g-signin2{
+  display: inline-block;
+  margin: 20px auto 20px auto;
+}
+#support{
+  color: #707070;
+  font-size: 12px;
+  margin-top: 50px;
+}
+#colourGrade{
+  position: fixed;
+  width: 100%;
+  z-index: 0;
+  left: 0;
+  bottom: 0;
+}
+
+button:hover{
+  cursor: pointer;
+}
+
+#back-button{
+  background-color: #2f4054;
+  border: 0;
+  border-radius: 3px;
+  margin: 0 10px 10px 10px;
+  padding: 10px;
+  color: white;
+  font-family: 'gilroy-extrabold';
+  width: 100px;
+}
+
+#register-button{
+  background-color: #2eb0ff;
+  border: 0;
+  border-radius: 3px;
+  margin: 0 10px 10px 10px;
+  padding: 10px;
+  color: white;
+  font-family: 'gilroy-extrabold';
+  width: 100px;
+}

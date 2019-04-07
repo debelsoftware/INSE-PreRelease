@@ -1,0 +1,8 @@
+x = raw_input ("please click the chat icon and press enter here: ")
+write ("Hey, this is a test message", into = "Type your message here")
+highlight("Send")
+click("Send")
+if Text("Hey, this is a test message").exists:
+    print ("success!")
+else:
+    print ("Fail!")

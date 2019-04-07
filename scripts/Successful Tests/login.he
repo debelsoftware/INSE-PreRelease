@@ -1,0 +1,17 @@
+import time
+start_chrome()
+go_to ("teammaker.app/beta/login")
+click ("Sign in")
+highlight ("Email or phone")
+write ("makertheseal@gmail.com", into = "Email or phone")
+highlight("Next")
+click ("Next")
+highlight ("Enter your password")
+write("makerdemouser", into = "Enter your password")
+highlight("Next")
+click("Next")
+if Text("Maker The Seal").exists:
+    print ("success!")
+else:
+    print ("Fail!")
+

@@ -1,0 +1,10 @@
+write ("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sodales odio vel sapien blandit, nec mollis tortor convallis. Quisque in leo a orci fermentum lacinia. Donec volutpat nisl et consectetur.", into = "Type your message here")
+highlight("Send")
+click("Send")
+if Alert("messages must be less than 100 characters").exists():
+    Alert("messages must be less than 100 characters").accept()
+    highlight("X")
+    click("X")
+    print ("success!")
+else:
+    print ("Fail!")

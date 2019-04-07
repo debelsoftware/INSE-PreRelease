@@ -1,0 +1,10 @@
+import time
+go_to("https://teammaker.app/beta/settings/")
+write ("delete", into = TextField("Enter 'delete' here", below="Admin Settings"))
+highlight ("Delete team")
+click ("Delete team")
+time.sleep(3)
+if Text("Maker The Seal").exists:
+    print ("success!")
+else:
+    print ("Fail!")

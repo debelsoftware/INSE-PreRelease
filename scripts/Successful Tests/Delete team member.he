@@ -1,0 +1,15 @@
+import time
+time.sleep(2)
+go_to("https://teammaker.app/beta/settings/")
+scroll_down(100)
+x = raw_input ("(CASE SENSITIVE) Please enter the username exactly for the team member being deleted: ")
+highlight (x)
+click (x)
+highlight ("remove")
+click ("remove")
+time.sleep(2)
+scroll_down(100)
+if Text(x).exists == True:
+    print ("Fail!")
+else:
+    print ("Success!")

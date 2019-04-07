@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <link rel="apple-touch-icon" sizes="180x180" href="../icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../icons/favicon-16x16.png">
+    <link rel="manifest" href="../icons/site.webmanifest">
+    <link rel="mask-icon" href="../icons/safari-pinned-tab.svg" color="#2eb0ff">
+    <link rel="shortcut icon" href="../icons/favicon.ico">
+    <meta name="msapplication-TileColor" content="#2eb0ff">
+    <meta name="msapplication-config" content="../icons/browserconfig.xml">
+    <meta name="theme-color" content="#2eb0ff">
+    <link rel="stylesheet" href="../css/master.css">
+    <link rel="stylesheet" href="./style.css">
+    <title>Team Maker - Useful Apps</title>
+  </head>
+  <body>
+    <div id="menu-render">
+    </div>
+    <main>
+      <h2>Useful apps</h2>
+      <p>These apps have been chosen based on your group tags</p>
+      <section class="useful-apps">
+        <ul>
+          <h1>Your Useful Apps</h1>
+          <a href="https://drive.google.com/drive" target="_blank"><li><img class="app-logo" src="https://cdn1.iconfinder.com/data/icons/logotypes/32/google-drive-512.png" alt=""></li></a>
+          <a href="https://youtube.com" target="_blank"><li><img class="app-logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/YouTube_social_white_square_%282017%29.svg/2000px-YouTube_social_white_square_%282017%29.svg.png" alt=""></li></a>
+          <a href="https://moodle.port.ac.uk" target="_blank"><li><img class="app-logo" src="https://pbs.twimg.com/profile_images/620889119036538880/Xwbnk5YZ_400x400.jpg" alt=""></li></a>
+          <a href="https://www.draw.io" target="_blank"><li><img class="app-logo" src="https://yt3.ggpht.com/a-/AAuE7mD1eM1nbghrkzWYMVKyyjg7KWJcmfLHUvCWMQ=s900-mo-c-c0xffffffff-rj-k-no" alt=""></li></a>
+          <a href="https://www.port.ac.uk" target="_blank"><li><img class="app-logo" src="https://cdn-edu.wpmhost.net/53544f/3c205ad261/55B2-4D76-4884-AC49-C427.png" alt=""></li></a>
+          <a href="https://github.com" target="_blank"><li><img class="app-logo" src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt=""></li></a>
+          <li><img class="app-logo add" src="../img/add.svg" alt=""></li>
+        </ul>
+      </section>
+      <section class="useful-apps">
+        <ul>
+          <h1>Other apps</h1>
+          <select class="" name="">
+            <option value="">Programming</option>
+            <option value="">Design / Drawing</option>
+            <option value="">Engineering</option>
+          </select>
+          <a href="https://stackoverflow.com" target="_blank"><li><img class="app-logo" src="https://cdn3.iconfinder.com/data/icons/inficons/512/stackoverflow.png" alt=""></li></a>
+          <a href="https://github.com" target="_blank"><li><img class="app-logo" src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt=""></li></a>
+          <a href="https://developer.mozilla.org/en-US/" target="_blank"><li><img class="app-logo" src="https://developer.mozilla.org/static/img/opengraph-logo.72382e605ce3.png" alt=""></li></a>
+        </ul>
+      </section>
+    </main>
+    <div class="chat-popup" id="chat">
+      <button type="button" id="chat-close" name="button">X</button>
+      <h3>Group Chat (Beta)</h3>
+      <div id="messages" class="messages">
+        <div class="message">
+          <img class="profile-pic" src="../img/makersealonly.svg" id="me1" alt="">
+          <p>This feature is in beta. Messages are not stored</p>
+          <span class="message-info">Maker</span>
+        </div>
+      </div>
+      <div class="chat-bottom">
+        <input type="text" id="message-input" placeholder="Type your message here" class="chat-text" name="" value="">
+        <button type="button" id="send-button" name="button">Send</button>
+      </div>
+    </div>
+    <img src="../img/chat.svg" id="chat-button" alt="">
+  </body>
+  <script type="text/javascript" src="https://apis.google.com/js/api.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js" charset="utf-8"></script>
+  <script src="../js/maker.js" charset="utf-8"></script>
+  <script src="../js/chat.js" charset="utf-8"></script>
+  <script src="../js/gui.js" charset="utf-8"></script>
+</html>

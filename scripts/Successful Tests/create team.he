@@ -1,0 +1,10 @@
+#highlight("click here")
+#click ("click here")
+write ("heliumtesting", into = "Enter team ID here...")
+write ("Heliumtest", into = "Enter team name here...")
+highlight ("Create")
+click ("Create")
+if Text("Good morning Maker").exists:
+    print ("success!")
+else:
+    print ("Fail!")

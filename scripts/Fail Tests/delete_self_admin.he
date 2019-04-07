@@ -1,0 +1,12 @@
+import time
+go_to("teammaker.app/beta/settings")
+highlight("Maker The Seal")
+click("Maker The Seal")
+highlight("Remove")
+click("Remove")
+time.sleep(5)
+if Alert("As an admin you cant remove yourself").exists():
+    Alert("As an admin you cant remove yourself").dismiss()
+    print("Success!")
+else:
+    print("Fail")
