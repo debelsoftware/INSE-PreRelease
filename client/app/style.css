@@ -125,11 +125,16 @@ progress::-moz-progress-bar{
   }
 }
 @media (max-width: 300px){
-
+  .work-wall{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: ;
+    grid-template-areas: ".";
+  }
 }
 @media (max-width: 450px){
   .work-wall{
-    display: block;
+    display: inline-block;
   }
   .deadline-card{
     margin-bottom: 20px;
