@@ -32,14 +32,40 @@ const httpServer = http.createServer(app);
 const httpsServer = https.createServer(credentials, app);
 
 /*-- MYSQL CONNECTION (SERVER HOSTED AT makerapi.host) --*/
-const connection = mysql.createConnection({
-	host: 'makerapi.host',
-	user: 'remote',
-	database: 'MAKER',
-	password: 'makerssecretrock',
-	multipleStatements: true,
-	supportBigNumbers: true
-});
+
+let connection;
+
+function handleDisconnect() {
+  connection = mysql.createConnection({
+  	host: 'makerapi.host',
+  	user: 'remote',
+  	database: 'MAKER',
+  	password: 'makerssecretrock',
+  	multipleStatements: true,
+  	supportBigNumbers: true
+  });
+
+  connection.connect(function(err) {
+    if(err) {
+      console.log('error when connecting to db:', err);
+      setTimeout(handleDisconnect, 2000);
+    }
+    else {
+      console.log("----- SQL CONNECTION ESTABLISHED -----");
+    }
+  });
+
+  connection.on('error', function(err) {
+    if(err.code === 'PROTOCOL_CONNECTION_LOST') {
+      console.log('REBOOTING SQL CONNECTION...');
+      handleDisconnect();
+    } else {
+      throw err;
+    }
+  });
+}
+
+handleDisconnect();
 
 httpServer.listen(80, () => {
 	console.log('HTTP Server running on port 80');
