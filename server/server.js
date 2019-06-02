@@ -8,6 +8,7 @@ const bodyParser = require('body-parser');
 const {OAuth2Client} = require('google-auth-library');
 const client = new OAuth2Client('353118485015-qerafpisj7krrpuhsuivb7066j3q06d0.apps.googleusercontent.com');
 const randomColor = require('randomcolor');
+const shortid = require('shortid');
 const FastRateLimit = require("fast-ratelimit").FastRateLimit;
 var messageLimiter = new FastRateLimit({
   threshold : 10,
@@ -222,7 +223,7 @@ async function getTasks(req, res, next){
 			if (err){
 				res.sendStatus(400);
 			}
-			if (results.length == 0){
+			else if (results.length == 0){
 				res.sendStatus(401);
 			}
 			else {
@@ -252,30 +253,47 @@ async function getTasks(req, res, next){
 */
 async function getTaskDetails(req, res, next){
   let googleData = await verify(req.body.token);
-	connection.query(
-    'SELECT userID FROM USERTEAMS WHERE userID = ? AND teamID = ? AND verified = 1',
-		[googleData[0],req.body.teamID],
+  connection.query(
+    'SELECT teamID FROM TASKS WHERE taskID = ?',
+		[req.body.taskID],
     function(err, results, fields) {
 			if (err){
 				res.sendStatus(400);
 			}
-			if (results.length == 0){
+      else if (results.length == 0) {
+        res.sendStatus(400);
+      }
+			else if (results[0].teamID != req.body.teamID){
 				res.sendStatus(401);
 			}
 			else {
-				connection.query(
-				  'SELECT name, dateSet, dateDue, details FROM TASKS WHERE taskID = ?',
-					[req.body.taskID],
-				   function(err, results, fields) {
-				   	if (err) {
-				       res.sendStatus(400);
-				     }
-				     else {
-			      	res.json(results);
-				   	}
-			  	}
-				);
-			}
+        connection.query(
+          'SELECT userID FROM USERTEAMS WHERE userID = ? AND teamID = ? AND verified = 1',
+      		[googleData[0],req.body.teamID],
+          function(err, results, fields) {
+      			if (err){
+      				res.sendStatus(400);
+      			}
+      			else if (results.length == 0){
+      				res.sendStatus(401);
+      			}
+      			else {
+      				connection.query(
+      				  'SELECT name, dateSet, dateDue, details FROM TASKS WHERE taskID = ?',
+      					[req.body.taskID],
+      				   function(err, results, fields) {
+      				   	if (err) {
+      				       res.sendStatus(400);
+      				     }
+      				     else {
+      			      	res.json(results);
+      				   	}
+      			  	}
+      				);
+      			}
+          }
+        );
+      }
     }
   );
 }
@@ -289,30 +307,47 @@ async function getTaskDetails(req, res, next){
 */
 async function getTaskFiles(req, res, next){
   let googleData = await verify(req.body.token);
-	connection.query(
-    'SELECT userID FROM USERTEAMS WHERE userID = ? AND teamID = ? AND verified = 1',
-		[googleData[0],req.body.teamID],
+  connection.query(
+    'SELECT teamID FROM TASKS WHERE taskID = ?',
+		[req.body.taskID],
     function(err, results, fields) {
 			if (err){
 				res.sendStatus(400);
 			}
-			if (results.length == 0){
+      else if (results.length == 0) {
+        res.sendStatus(400);
+      }
+			else if (results[0].teamID != req.body.teamID){
 				res.sendStatus(401);
 			}
 			else {
-				connection.query(
-				  'SELECT name, url FROM FILES WHERE taskID = ?',
-					[req.body.taskID],
-				   function(err, results, fields) {
-				   	if (err) {
-				       res.sendStatus(400);
-				     }
-				     else {
-			      	res.json(results);
-				   	}
-			  	}
-				);
-			}
+        connection.query(
+          'SELECT userID FROM USERTEAMS WHERE userID = ? AND teamID = ? AND verified = 1',
+      		[googleData[0],req.body.teamID],
+          function(err, results, fields) {
+      			if (err){
+      				res.sendStatus(400);
+      			}
+      			else if (results.length == 0){
+      				res.sendStatus(401);
+      			}
+      			else {
+      				connection.query(
+      				  'SELECT name, url FROM FILES WHERE taskID = ?',
+      					[req.body.taskID],
+      				   function(err, results, fields) {
+      				   	if (err) {
+      				       res.sendStatus(400);
+      				     }
+      				     else {
+      			      	res.json(results);
+      				   	}
+      			  	}
+      				);
+      			}
+          }
+        );
+      }
     }
   );
 }
@@ -333,7 +368,7 @@ async function getMembers(req, res, next){
 			if (err){
 				res.sendStatus(400);
 			}
-			if (results.length == 0){
+			else if (results.length == 0){
 				res.sendStatus(401);
 			}
 			else {
@@ -363,32 +398,49 @@ async function getMembers(req, res, next){
 */
 async function getTaskMembers(req, res, next){
   let googleData = await verify(req.body.token);
-	connection.query(
-    'SELECT userID FROM USERTEAMS WHERE userID = ? AND teamID = ? AND verified = 1',
-		[googleData[0],req.body.teamID],
+  connection.query(
+    'SELECT teamID FROM TASKS WHERE taskID = ?',
+		[req.body.taskID],
     function(err, results, fields) {
 			if (err){
 				res.sendStatus(400);
 			}
-			if (results.length == 0){
+      else if (results.length == 0) {
+        res.sendStatus(400);
+      }
+			else if (results[0].teamID != req.body.teamID){
 				res.sendStatus(401);
 			}
 			else {
-				connection.query(
-			    'SELECT USERS.userID, USERS.name, USERS.colour FROM USERTASKS INNER JOIN USERS ON USERTASKS.userID = USERS.userID WHERE USERTASKS.taskID = ?',
-					[req.body.taskID],
-			    function(err, results, fields) {
-			      if (err) {
-			        res.sendStatus(400);
-			      }
-			      else {
-			        res.json(results);
-			      }
-			    }
-			  );
-			}
-		}
-	)
+        connection.query(
+          'SELECT userID FROM USERTEAMS WHERE userID = ? AND teamID = ? AND verified = 1',
+      		[googleData[0],req.body.teamID],
+          function(err, results, fields) {
+      			if (err){
+      				res.sendStatus(400);
+      			}
+      			else if (results.length == 0){
+      				res.sendStatus(401);
+      			}
+      			else {
+      				connection.query(
+      			    'SELECT USERS.userID, USERS.name, USERS.colour FROM USERTASKS INNER JOIN USERS ON USERTASKS.userID = USERS.userID WHERE USERTASKS.taskID = ?',
+      					[req.body.taskID],
+      			    function(err, results, fields) {
+      			      if (err) {
+      			        res.sendStatus(400);
+      			      }
+      			      else {
+      			        res.json(results);
+      			      }
+      			    }
+      			  );
+      			}
+      		}
+      	);
+      }
+    }
+  );
 }
 
 /*-- joinTeam --
@@ -444,7 +496,7 @@ async function getNotif(req, res, next){
 			if (err){
 				res.sendStatus(400);
 			}
-			if (results.length == 0){
+			else if (results.length == 0){
 				res.sendStatus(401);
 			}
 			else {
@@ -528,6 +580,7 @@ async function respondRequest(req, res, next){
 */
 async function createTask(req, res, next){
   let googleData = await verify(req.body.token);
+  let taskID = shortid.generate();
 	connection.query(
     'SELECT userID FROM USERTEAMS WHERE userID = ? AND teamID = ? AND verified = 1',
 		[googleData[0],req.body.teamID],
@@ -541,14 +594,13 @@ async function createTask(req, res, next){
 			else {
 				if (validateTaskInputs(req.body.name,req.body.details,req.body.users,req.body.dateDue)) {
 					connection.query(
-					  'INSERT INTO TASKS (teamID,name,details,dateSet,dateDue) VALUES (?,?,?,?,?)',
-						[req.body.teamID,req.body.name,req.body.details,new Date().getTime(), req.body.dateDue],
+					  'INSERT INTO TASKS (taskID,teamID,name,details,dateSet,dateDue) VALUES (?,?,?,?,?,?)',
+						[taskID,req.body.teamID,req.body.name,req.body.details,new Date().getTime(), req.body.dateDue],
 					   function(err, results, fields) {
 					   	if (err) {
 					    	res.sendStatus(400);
 					    }
 					    else {
-								const taskID = results.insertId;
 								for (user of req.body.users){
 									connection.query(
 									  'INSERT INTO USERTASKS VALUES (?,?)',

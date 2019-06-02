@@ -21,6 +21,9 @@
       <h1>Welcome</h1>
       <p id="instruct">You aren't currently registered</p>
       <div id="register-buttons">
+        <div class="privacy-warning">
+          <input id="privacy-agree" type="checkbox" name="" value="">I agree to the Team Maker <a target="_blank" href="../privacy">privacy policy</a>
+        </div>
         <button id="register-button">Register</button>
         <button id="back-button">Back</button>
       </div>
@@ -29,4 +32,19 @@
   </body>
   <script src="../js/maker.js" charset="utf-8"></script>
   <script src="register.js" charset="utf-8"></script>
+  <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css" />
+  <script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js"></script>
+  <script>
+    window.addEventListener("load", function(){
+    window.cookieconsent.initialise({
+      "palette": {
+        "popup": {
+          "background": "#383b75"
+        },
+        "button": {
+          "background": "#f1d600"
+        }
+      }
+    })});
+  </script>
 </html>

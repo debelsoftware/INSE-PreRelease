@@ -107,19 +107,36 @@ function populateMembers(members){
 	RETURNS: nothing
 */
 function populateTasks(tasks){
-  let time = (new Date).getTime();
   const wall = document.getElementById('work-wall');
   wall.innerHTML = "";
   if (tasks.length == 0){
-    wall.classList.remove("work-wall");
-    wall.classList.add("empty");
     wall.innerHTML = "<h3>No work for you today 🎉<h3><img id='coffee' src='../img/coffee.gif'>"
   }
   else {
+    wall.classList.remove("empty");
+    wall.classList.add("work-wall");
     for (task of tasks){
-      wall.innerHTML += "<a class='deadline-card' href='../task?task="+task.taskID+"'><h1>"+task.name+"</h1><p class='due-date'>Due: "+epochToDate(task.dateDue)+"</p><progress value='"+((task.dateDue-task.dateSet)/time)*10000+"' max='100'></progress></a>"
+      wall.appendChild(createTask(task))
     }
   }
+}
+
+function createTask(task){
+  let time = (new Date).getTime();
+  const container = document.createElement("a");
+  const title = document.createElement("h1");
+  const date = document.createElement("p");
+  const progress = document.createElement("progress");
+  container.classList.add("deadline-card");
+  container.href = `../task?id=${task.taskID}`;
+  title.textContent = task.name;
+  date.textContent = `Due: ${epochToDate(task.dateDue)}`;
+  date.classList.add("due-date");
+  progress.value = ((task.dateDue-task.dateSet)/time)*10000
+  container.appendChild(title)
+  container.appendChild(date)
+  container.appendChild(progress)
+  return container
 }
 
 /*-- epoch to date --

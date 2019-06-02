@@ -134,7 +134,7 @@ progress::-moz-progress-bar{
 }
 @media (max-width: 450px){
   .work-wall{
-    display: inline-block;
+    display: block;
   }
   .deadline-card{
     margin-bottom: 20px;

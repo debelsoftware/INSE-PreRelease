@@ -16,6 +16,7 @@
     "google-auth-library": "^3.1.0",
     "mysql2": "^1.6.5",
     "randomcolor": "^0.5.4",
+    "shortid": "^2.2.14",
     "socket.io": "^2.2.0"
   }
 }

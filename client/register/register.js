@@ -7,26 +7,32 @@ document.getElementById('back-button').addEventListener('click', back);
 	RETURNS: nothing
 */
 function register(){
-  fetch(host+"register", {
-    method: 'POST',
-    body: JSON.stringify({
-      "token": sessionStorage.getItem('token')
-    }),
-    headers:{
-      'Content-Type': 'application/json'
+  if (document.getElementById('privacy-agree').checked == true) {
+    fetch(host+"register", {
+      method: 'POST',
+      body: JSON.stringify({
+        "token": sessionStorage.getItem('token')
+      }),
+      headers:{
+        'Content-Type': 'application/json'
+      }
+    }).then(function(response) {
+      if (response.status == 400){
+        alert("We encountered an error while attempting to register you. Please try again later");
+      }
+      else {
+        window.location.href = "../teamselect";
+      }
     }
-  }).then(function(response) {
-    if (response.status == 400){
-      alert("We encountered an error while attempting to register you. Please try again later");
-    }
-    else {
-      window.location.href = "../teamselect";
-    }
+    )
+    .catch(error => console.log(error));
   }
-  )
-  .catch(error => console.log(error));
+  else {
+    alert("You must agree to our privacy policy to register");
+  }
+
 }
 
 function back(){
-  window.location.href = ".."
+  window.location.href = "../../"
 }

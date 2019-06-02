@@ -1,7 +1,7 @@
 window.addEventListener("load", init);
 const url = new URL(window.location);
 const teamID = localStorage.getItem("team");
-const taskID = url.searchParams.get("task");
+const taskID = url.searchParams.get("id");
 
 /*-- init --
 	DESCRIPTION: runs startup functions.
