@@ -1,6 +1,9 @@
 main{
   margin-top: 30px;
 }
+button:hover{
+  cursor: pointer;
+}
 .task-details{
   margin: 10px 0 20px 0;
 }
@@ -10,6 +13,20 @@ main{
 .task-details>h1{
   font-size: 40px;
   margin: 10px 0 0 0;
+}
+.options{
+  padding: 20px;
+  text-align: center;
+}
+#delete{
+  display: none;
+  background-color: #ed4e4e;
+  border: 0;
+  border-radius: 3px;
+  margin: 0 20px 10px 20px;
+  padding: 10px;
+  color: white;
+  font-family: 'gilroy-extrabold';
 }
 #google-drive-upload{
   background-color: var(--secondaryColor);

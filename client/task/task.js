@@ -44,6 +44,7 @@ function getTaskMembers(){
   )
   .then(function(parsedJson) {
     populateMembers(parsedJson);
+    showDelete(parsedJson)
   })
   .catch(error => console.log(error));
 }
@@ -149,8 +150,14 @@ function populateTaskFiles(files){
 */
 function populateMembers(members){
   const membersBox = document.getElementById('members');
-  for (member of members){
+  for (member of members.users){
     membersBox.innerHTML += '<li><img class="profile-pic" src="../img/makersealonly.svg" id="me3" alt="">'+member.name+'</li>'
+  }
+}
+
+function showDelete(data){
+  if (data.containsSelf){
+    document.getElementById("delete").style.display = "inline-block";
   }
 }
 

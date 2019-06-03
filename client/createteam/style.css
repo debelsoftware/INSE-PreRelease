@@ -66,21 +66,22 @@ p{
   left: 0;
   bottom: 0;
 }
-
 .team-in{
   width: 90%;
   max-width: 300px;
-  padding: 5px;
+  padding: 10px;
   font-family: 'gilroy-extrabold';
+  font-size: 20px;
+  text-align: center;
   color: #2f4054;
   margin: auto;
   border: none;
+  border-bottom: 3px solid #2eb0ff;
   outline: none;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.12);
-  border-radius:5px;
+  border-radius:2px;
   background: #fff;
   margin-bottom: 10px;
-  }
+}
 #create-button{
   background-color: #2eb0ff;
   border: 0;

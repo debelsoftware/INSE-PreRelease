@@ -431,7 +431,16 @@ async function getTaskMembers(req, res, next){
       			        res.sendStatus(400);
       			      }
       			      else {
-      			        res.json(results);
+                    let containsSelf = false;
+                    results.forEach(function(user){
+                      if (user.userID == googleData[0]){
+                        containsSelf = true;
+                      }
+                    });
+      			        res.json({
+                      users: results,
+                      containsSelf: containsSelf
+                    });
       			      }
       			    }
       			  );
@@ -811,11 +820,12 @@ async function deleteAccount(req, res, next){
 */
 async function createTeam(req, res, next){
 	let googleData = await verify(req.body.token);
-	let validationResults = validateTeamInputs(req.body.teamID,req.body.name)
+  const teamID = shortid.generate();
+	let validationResults = validateTeamInputs(req.body.name)
 	if (validationResults == "pass") {
 		connection.query(
 	    'SELECT userID FROM USERS WHERE userID = ?',
-			[googleData[0],req.body.teamID],
+			[googleData[0],teamID],
 	    function(err, results, fields) {
 				if (err){
 					res.sendStatus(400);
@@ -826,7 +836,7 @@ async function createTeam(req, res, next){
 				else {
 					connection.query(
 				    'INSERT INTO TEAMS VALUES(?,?)',
-						[req.body.teamID,req.body.name],
+						[teamID,req.body.name],
 				    function(err, results, fields) {
 				      if (err) {
 				        res.sendStatus(400);
@@ -834,7 +844,7 @@ async function createTeam(req, res, next){
 				      else {
 								connection.query(
 							    'INSERT INTO USERTEAMS VALUES(?,?,?,?,?)',
-									[googleData[0],req.body.teamID,1,1,0],
+									[googleData[0],teamID,1,1,0],
 							    function(err, results, fields) {
 							      if (err) {
 							        res.sendStatus(400);
@@ -895,19 +905,10 @@ function validateTaskInputs(name,details,users,dateDue){
 	PARAMS: teamID, name
 	RETURNS: String (error message or pass)
 */
-function validateTeamInputs(teamID,name){
+function validateTeamInputs(name){
   const regex = /^[a-zA-Z0-9\s]+$/g
-  if (teamID.length == 0 || name.length == 0) {
+  if (name.length == 0) {
     return "Please fill out both inputs";
-  }
-  else if (teamID.indexOf(' ') >= 0){
-    return "Must not have spaces in team ID";
-  }
-  else if (!teamID.match(regex)) {
-    return "Team ID must not have special characters";
-  }
-  else if (teamID.length>20) {
-    return "Team ID must be less than 20 characters";
   }
   else if (!name.match(regex)) {
     return "Name must not have special characters";

@@ -266,5 +266,5 @@ function validateInputs(name,details,date){
 }
 
 function back(){
-  window.location.href = ".."
+  window.location.href = "../app"
 }

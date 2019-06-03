@@ -9,15 +9,13 @@ document.getElementById('back-button').addEventListener('click', goBack);
 	RETURNS: nothing
 */
 function createTeam(){
-  let teamID = document.getElementById('teamID').value;
   let name = document.getElementById('name').value;
-  let validationResults = validateTeamInputs(teamID,name);
+  let validationResults = validateTeamInputs(name);
   if (validationResults == "pass") {
     fetch(host+"createteam", {
       method: 'POST',
       body: JSON.stringify({
         "token": sessionStorage.getItem('token'),
-        "teamID": teamID,
         "name": name
       }),
       headers:{
@@ -31,8 +29,7 @@ function createTeam(){
         alert("Sorry, our servers encountered an issue. Please try again later");
       }
       else {
-        localStorage.setItem("team",teamID);
-        window.location.href = "../app"
+        window.location.href = "../teamselect"
       }
     }
     )
@@ -48,19 +45,10 @@ function createTeam(){
 	PARAMS: teamID, name
 	RETURNS: String (error message or pass)
 */
-function validateTeamInputs(teamID,name){
+function validateTeamInputs(name){
   const regex = /^[a-zA-Z0-9\s]+$/g
-  if (teamID.length == 0 || name.length == 0) {
-    return "Please fill out both inputs";
-  }
-  else if (teamID.indexOf(' ') >= 0){
-    return "Must not have spaces in team ID";
-  }
-  else if (!teamID.match(regex)) {
-    return "Team ID must not have special characters";
-  }
-  else if (teamID.length>20) {
-    return "Team ID must be less than 20 characters";
+  if (name.length == 0) {
+    return "Please give your team a name";
   }
   else if (!name.match(regex)) {
     return "Name must not have special characters";
