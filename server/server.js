@@ -9,11 +9,13 @@ const {OAuth2Client} = require('google-auth-library');
 const client = new OAuth2Client('353118485015-qerafpisj7krrpuhsuivb7066j3q06d0.apps.googleusercontent.com');
 const randomColor = require('randomcolor');
 const shortid = require('shortid');
+/*
 const FastRateLimit = require("fast-ratelimit").FastRateLimit;
 var messageLimiter = new FastRateLimit({
   threshold : 10,
   ttl       : 60
 });
+*/
 
 /*-- SSL ENCRYPTION KEYS (MUST BE STORED IN 'sslcert' FOLDER) --*/
 const privateKey = fs.readFileSync('./sslcert/privkey.pem', 'utf8');
@@ -96,6 +98,7 @@ app.post('/join', joinTeam);
 app.post('/notifications', getNotif);
 app.post('/respondrequest', respondRequest);
 app.post('/createtask', createTask);
+app.post('/deletetask', deleteTask);
 app.post('/removemembers', removeMembers);
 app.post('/deleteteam', deleteTeam);
 app.post('/leaveteam', leaveTeam);
@@ -576,6 +579,25 @@ async function respondRequest(req, res, next){
 					);
 				}
 			}
+    }
+  );
+}
+
+async function deleteTask(req, res, next){
+  let googleData = await verify(req.body.token);
+  connection.query(
+    'SELECT * FROM USERTASKS WHERE taskID = ? AND userID = ?',
+		[req.body.taskID, googleData[0]],
+    function(err, results, fields) {
+			if (err){
+				res.sendStatus(400);
+			}
+			if (results.length == 0){
+				res.sendStatus(401);
+			}
+			else {
+        
+      }
     }
   );
 }
