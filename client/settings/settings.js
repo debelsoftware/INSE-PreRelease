@@ -16,6 +16,11 @@ const teamID = localStorage.getItem("team");
 */
 function init(){
   getMembers();
+  makeInvite();
+}
+
+function makeInvite(){
+  document.getElementById('invite-link').textContent = `https://teammaker.app/beta/invite?id=${teamID}`
 }
 
 /*-- Get Members --
@@ -35,7 +40,7 @@ function getMembers(){
     }
   }).then(function(response) {
     if (response.status == 401){ //DETECTS IF USER IS AUTHORISED
-      window.location.href = "../teamselect" //IF UNAUTHORISED, USER RETURNED TO TEAM SELECT PAGE
+      window.location.href = "../login" //IF UNAUTHORISED, USER RETURNED TO TEAM SELECT PAGE
     }
     else if (response.status == 400){
       alert("Sorry, our servers encountered an issue. Please try again later");
@@ -167,7 +172,7 @@ function leaveTeam(){
     }
   }).then(function(response) {
     if (response.status == 401){ //DETECTS IF USER IS AUTHORISED
-      window.location.href = "../teamselect" //IF UNAUTHORISED, USER RETURNED TO TEAM SELECT PAGE
+      window.location.href = "../login" //IF UNAUTHORISED, USER RETURNED TO TEAM SELECT PAGE
     }
     else if (response.status == 400){
       alert("Sorry, our servers encountered an issue. Please try again later");
@@ -176,7 +181,7 @@ function leaveTeam(){
       alert("As an admin you cant remove yourself");
     }
     else {
-      window.location.href = "../settings";
+      window.location.href = "../teamselect";
     }
   }
   )
@@ -200,7 +205,7 @@ function deleteAccount(){
       }
     }).then(function(response) {
       if (response.status == 401){ //DETECTS IF USER IS AUTHORISED
-        window.location.href = "../teamselect" //IF UNAUTHORISED, USER RETURNED TO TEAM SELECT PAGE
+        window.location.href = "../login" //IF UNAUTHORISED, USER RETURNED TO TEAM SELECT PAGE
       }
       else if (response.status == 400){
         alert("Sorry, our servers encountered an issue. Please try again later");

@@ -1,5 +1,6 @@
 document.getElementById('register-button').addEventListener('click', register);
 document.getElementById('back-button').addEventListener('click', back);
+const url = new URL(window.location);
 
 /*-- register --
 	DESCRIPTION: sends a post request to the server to register them
@@ -21,7 +22,12 @@ function register(){
         alert("We encountered an error while attempting to register you. Please try again later");
       }
       else {
-        window.location.href = "../teamselect";
+        if (url.searchParams.get("invite") != null){
+          window.location.href = `../teamselect?invite=${url.searchParams.get("invite")}`;
+        }
+        else {
+          window.location.href = "../teamselect";
+        }
       }
     }
     )

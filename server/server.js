@@ -9,13 +9,11 @@ const {OAuth2Client} = require('google-auth-library');
 const client = new OAuth2Client('353118485015-qerafpisj7krrpuhsuivb7066j3q06d0.apps.googleusercontent.com');
 const randomColor = require('randomcolor');
 const shortid = require('shortid');
-/*
 const FastRateLimit = require("fast-ratelimit").FastRateLimit;
 var messageLimiter = new FastRateLimit({
   threshold : 10,
   ttl       : 60
 });
-*/
 
 /*-- SSL ENCRYPTION KEYS (MUST BE STORED IN 'sslcert' FOLDER) --*/
 const privateKey = fs.readFileSync('./sslcert/privkey.pem', 'utf8');
@@ -104,6 +102,8 @@ app.post('/deleteteam', deleteTeam);
 app.post('/leaveteam', leaveTeam);
 app.post('/deleteaccount', deleteAccount);
 app.post('/createteam', createTeam);
+app.post('/isadmin', isAdmin);
+app.post('/messages', getMessages);
 
 // ----------------------------------------
 
@@ -355,6 +355,29 @@ async function getTaskFiles(req, res, next){
   );
 }
 
+async function isAdmin(req, res, next){
+  let googleData = await verify(req.body.token);
+  connection.query(
+    'SELECT userID FROM USERTEAMS WHERE userID = ? AND teamID = ? AND verified = 1 AND isAdmin = 1',
+		[googleData[0],req.body.teamID],
+    function(err, results, fields) {
+			if (err){
+				res.sendStatus(400);
+			}
+			else if (results.length == 0){
+        res.json({
+          isAdmin: false
+        });
+			}
+			else {
+        res.json({
+          isAdmin: true
+        });
+			}
+		}
+	)
+}
+
 /*-- GET MEMBERS --
 	DESCRIPTION: Checks user is authorised and then gets all of the members that a team have.
 	PARAMS: req(the request data from the client, contains token and teamID)
@@ -583,23 +606,67 @@ async function respondRequest(req, res, next){
   );
 }
 
+/*-- deleteTask --
+	DESCRIPTION: Checks user is authorised and then deletes the task based on the data given.
+	PARAMS: req(the request data from the client)
+					res(handles response)
+					next(applys CORS headers)
+	RETURNS: HTTP status code (200 if success and 400 if fail)
+*/
 async function deleteTask(req, res, next){
   let googleData = await verify(req.body.token);
   connection.query(
-    'SELECT * FROM USERTASKS WHERE taskID = ? AND userID = ?',
-		[req.body.taskID, googleData[0]],
+    'SELECT USERTEAMS.userID FROM TASKS INNER JOIN USERTEAMS ON TASKS.teamID = USERTEAMS.teamID WHERE TASKS.taskID = ? AND USERTEAMS.userID = ? AND USERTEAMS.isAdmin = 1 AND USERTEAMS.verified = 1',
+		[req.body.taskID,googleData[0]],
     function(err, results, fields) {
 			if (err){
 				res.sendStatus(400);
 			}
-			if (results.length == 0){
-				res.sendStatus(401);
+			else if (results.length == 0){
+        connection.query(
+          'SELECT * FROM USERTASKS WHERE taskID = ? AND userID = ?',
+      		[req.body.taskID, googleData[0]],
+          function(err, results, fields) {
+      			if (err){
+      				res.sendStatus(400);
+      			}
+      			if (results.length == 0){
+      				res.sendStatus(401);
+      			}
+      			else {
+      				connection.query(
+      					'DELETE FROM TASKS WHERE taskID = ?',
+      					[req.body.taskID],
+      					 function(err, results, fields) {
+      						 if (err) {
+      							 res.sendStatus(400);
+      						 }
+      						 else {
+      							 res.sendStatus(200)
+      						 }
+      					}
+      				);
+            }
+          }
+        );
 			}
 			else {
-        
+        connection.query(
+          'DELETE FROM TASKS WHERE taskID = ?',
+          [req.body.taskID],
+           function(err, results, fields) {
+             if (err) {
+               res.sendStatus(400);
+             }
+             else {
+               res.sendStatus(200)
+             }
+          }
+        );
       }
     }
   );
+
 }
 
 /*-- createTask --
@@ -888,6 +955,47 @@ async function createTeam(req, res, next){
 	}
 }
 
+async function getMessages(req, res, next){
+  let googleData = await verify(req.body.token);
+  connection.query(
+    'SELECT userID FROM USERTEAMS WHERE userID = ? AND teamID = ? AND verified = 1',
+		[googleData[0],req.body.teamID],
+    function(err, results, fields) {
+			if (err){
+				res.sendStatus(400);
+			}
+			if (results.length == 0){
+				res.sendStatus(401);
+			}
+			else {
+        connection.query(
+          'DELETE FROM MESSAGE WHERE teamID = ? AND messageID NOT IN (SELECT messageID FROM (SELECT messageID FROM MESSAGE WHERE teamID = ? ORDER BY messageTime DESC LIMIT 20) AS x)',
+          [req.body.teamID, req.body.teamID],
+          function(err, results, fields) {
+            if (err){
+              res.sendStatus(400);
+            }
+            else {
+              connection.query(
+                'SELECT USERS.name, USERS.colour, MESSAGE.messageText, MESSAGE.messageType, IF(USERS.userID = ?,"true","false") AS isSelf FROM MESSAGE INNER JOIN USERS ON MESSAGE.userID = USERS.userID WHERE MESSAGE.teamID = ? ORDER BY messageTime',
+                [googleData[0],req.body.teamID],
+                function(err, results, fields) {
+                  if (err){
+                    res.sendStatus(400);
+                  }
+                  else {
+                    res.json(results);
+                  }
+                }
+              );
+            }
+          }
+        );
+      }
+    }
+  );
+}
+
 /*-- validateTaskInputs --
 	DESCRIPTION: Validates the inputs given by the user to create a task with
 	PARAMS: name,details,users,dateDue
@@ -968,6 +1076,7 @@ function charLimitCheck(data){
  --*/
 
 let io = socket(httpsServer);
+io.set('origins', '*:*');
 
 async function getChatUser(token){
   let googleData = await verify(token);
@@ -975,37 +1084,142 @@ async function getChatUser(token){
 }
 
 io.on('connection', function(socket){
-  socket.on('joinroom', function(data){
-    socket.join(data);
-  })
-  socket.on('message', function(data){
-    let namespace = socket.handshake.address;
-    messageLimiter.consume(namespace).then(async() => {
-      if (charLimitCheck(data)){
-          socket.broadcast.to(data.room).emit('message', {
-            data: data.data,
-            user: await getChatUser(data.user)
+  socket.on('joinroom', async function(data){
+    let googleData = await verify(data.user);
+  	connection.query(
+      'SELECT userID FROM USERTEAMS WHERE userID = ? AND teamID = ?',
+  		[googleData[0], data.room],
+      function(err, results, fields) {
+        if (err) {
+          socket.emit('fail', {
+            data: "Failed to auth for chat"
           });
-      }
-      else {
-      }
-    })
-    .catch(() => {
-    });
-  })
-  socket.on('image', function(data){
-    let namespace = socket.handshake.address;
-    messageLimiter.consume(namespace).then(async() => {
-      if (charLimitCheck(data)){
-          socket.broadcast.to(data.room).emit('image', {
-            data: data.data,
-            user: await getChatUser(data.user)
+        }
+  			else if (results.length == 0){
+          socket.emit('fail', {
+            data: "Failed to auth for chat"
           });
+  			}
+        else {
+          socket.join(data.room);
+        }
       }
-      else {
+    );
+  })
+  socket.on('message', async function(data){
+    let googleData = await verify(data.user);
+  	connection.query(
+      'SELECT userID FROM USERTEAMS WHERE userID = ? AND teamID = ?',
+  		[googleData[0], data.room],
+      function(err, results, fields) {
+        if (err) {
+          socket.emit('fail', {
+            data: "Failed to auth for chat"
+          });
+        }
+  			else if (results.length == 0){
+          socket.emit('fail', {
+            data: "Failed to auth for chat"
+          });
+  			}
+        else {
+          let namespace = socket.handshake.address;
+          messageLimiter.consume(namespace).then(async() => {
+            if (charLimitCheck(data.data)){
+              connection.query(
+                'DELETE FROM MESSAGE WHERE teamID = ? AND messageID NOT IN (SELECT messageID FROM (SELECT messageID FROM MESSAGE WHERE teamID = ? ORDER BY messageTime DESC LIMIT 20) AS x)',
+                [data.room, data.room],
+                function(err, results, fields) {
+                  if (err){
+                    res.sendStatus(400);
+                  }
+                  else {
+                    connection.query(
+          				    'INSERT INTO MESSAGE VALUES(?,?,?,?,?,?)',
+          						[shortid.generate(),"txt",new Date().getTime(),data.data,googleData[0],data.room],
+          				    function(err, results, fields) {
+          				      if (err) {
+                          socket.emit('fail', {
+                            data: "Failed to store message"
+                          });
+          				      }
+          				      else {
+                          socket.broadcast.to(data.room).emit('message', {
+                            data: data.data,
+                            user: googleData[2]
+                          });
+                        }
+                      }
+                    );
+                  }
+                }
+              );
+            }
+            else {
+            }
+          })
+          .catch(() => {
+          });
+        }
       }
-    })
-    .catch(() => {
-    });
+    );
+  })
+  socket.on('image', async function(data){
+    let googleData = await verify(data.user);
+  	connection.query(
+      'SELECT userID FROM USERTEAMS WHERE userID = ? AND teamID = ?',
+  		[googleData[0], data.room],
+      function(err, results, fields) {
+        if (err) {
+          socket.emit('fail', {
+            data: "Failed to auth for chat"
+          });
+        }
+  			else if (results.length == 0){
+          socket.emit('fail', {
+            data: "Failed to auth for chat"
+          });
+  			}
+        else {
+          let namespace = socket.handshake.address;
+          messageLimiter.consume(namespace).then(async() => {
+            if (charLimitCheck(data.data)){
+              connection.query(
+                'DELETE FROM MESSAGE WHERE teamID = ? AND messageID NOT IN (SELECT messageID FROM (SELECT messageID FROM MESSAGE WHERE teamID = ? ORDER BY messageTime DESC LIMIT 20) AS x)',
+                [data.room, data.room],
+                function(err, results, fields) {
+                  if (err){
+                    res.sendStatus(400);
+                  }
+                  else {
+                    connection.query(
+          				    'INSERT INTO MESSAGE VALUES(?,?,?,?,?,?)',
+          						[shortid.generate(),"img",new Date().getTime(),data.data,googleData[0],data.room],
+          				    function(err, results, fields) {
+          				      if (err) {
+                          socket.emit('fail', {
+                            data: "Failed to store message"
+                          });
+          				      }
+          				      else {
+                          socket.broadcast.to(data.room).emit('image', {
+                            data: data.data,
+                            user: googleData[2]
+                          });
+                        }
+                      }
+                    );
+                  }
+                }
+              );
+            }
+            else {
+            }
+          })
+          .catch(() => {
+          });
+        }
+      }
+    );
   })
 })

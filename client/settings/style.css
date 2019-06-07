@@ -14,6 +14,13 @@ main{
 #delete-team,#delete-account{
   background-color: #ed4e4e;
 }
+#invite-link{
+  padding: 5px;
+  margin-top: 8px;
+  display: inline-block;
+  border: 3px dashed #b7c0cc;
+  border-radius: 3px;
+}
 .card button{
   display: inline-block;
   background-color: var(--secondaryColor);

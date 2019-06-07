@@ -137,7 +137,7 @@ function getMembers(){
     }
   }).then(function(response) {
     if (response.status == 401){ //DETECTS IF USER IS AUTHORISED
-      window.location.href = "../teamselect" //IF UNAUTHORISED, USER RETURNED TO TEAM SELECT PAGE
+      window.location.href = "../login" //IF UNAUTHORISED, USER RETURNED TO TEAM SELECT PAGE
     }
     else if (response.status == 400){
       alert("Sorry, our servers encountered an issue. Please try again later");
@@ -212,7 +212,7 @@ function createTask(){
       }
     }).then(function(response) {
       if (response.status == 401){ //DETECTS IF USER IS AUTHORISED
-        window.location.href = "../teamselect" //IF UNAUTHORISED, USER RETURNED TO TEAM SELECT PAGE
+        window.location.href = "../login" //IF UNAUTHORISED, USER RETURNED TO TEAM SELECT PAGE
       }
       else if (response.status == 400){
         alert("Sorry, our servers encountered an issue. Please try again later");

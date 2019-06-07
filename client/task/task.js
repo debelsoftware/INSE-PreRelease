@@ -3,6 +3,8 @@ const url = new URL(window.location);
 const teamID = localStorage.getItem("team");
 const taskID = url.searchParams.get("id");
 
+document.getElementById("delete").addEventListener("click", deleteTask)
+
 /*-- init --
 	DESCRIPTION: runs startup functions.
   PARAMS: No perams needed.
@@ -12,6 +14,35 @@ function init(){
   getTaskMembers();
   getTaskDetails();
   getTaskFiles();
+  checkIfAdmin();
+}
+
+function checkIfAdmin(){
+  fetch(host+"isadmin", {
+    method: 'POST',
+    body: JSON.stringify({
+      "teamID": teamID,
+      "token": sessionStorage.getItem('token')
+    }),
+    headers:{
+      'Content-Type': 'application/json'
+    }
+  }).then(function(response) {
+    if (response.status == 401){ //DETECTS IF USER IS AUTHORISED
+      window.location.href = "../login" //IF UNAUTHORISED, USER RETURNED TO TEAM SELECT PAGE
+    }
+    else if (response.status == 400){
+      alert("Sorry, our servers encountered an issue. Please try again later");
+    }
+    else {
+      return response.json();
+    }
+  }
+  )
+  .then(function(parsedJson) {
+    showDelete(parsedJson)
+  })
+  .catch(error => console.log(error));
 }
 
 /*-- Get Members --
@@ -32,7 +63,7 @@ function getTaskMembers(){
     }
   }).then(function(response) {
     if (response.status == 401){ //DETECTS IF USER IS AUTHORISED
-      window.location.href = "../teamselect" //IF UNAUTHORISED, USER RETURNED TO TEAM SELECT PAGE
+      window.location.href = "../login" //IF UNAUTHORISED, USER RETURNED TO TEAM SELECT PAGE
     }
     else if (response.status == 400){
       alert("Sorry, our servers encountered an issue. Please try again later");
@@ -67,10 +98,9 @@ function getTaskDetails(){
     }
   }).then(function(response) {
     if (response.status == 401){ //DETECTS IF USER IS AUTHORISED
-      window.location.href = "../teamselect" //IF UNAUTHORISED, USER RETURNED TO TEAM SELECT PAGE
+      window.location.href = "../login" //IF UNAUTHORISED, USER RETURNED TO TEAM SELECT PAGE
     }
     else if (response.status == 400){
-      alert("Sorry, our servers encountered an issue. Please try again later");
     }
     else {
       return response.json();
@@ -101,10 +131,9 @@ function getTaskFiles(){
     }
   }).then(function(response) {
     if (response.status == 401){ //DETECTS IF USER IS AUTHORISED
-      window.location.href = "../teamselect" //IF UNAUTHORISED, USER RETURNED TO TEAM SELECT PAGE
+      window.location.href = "../login" //IF UNAUTHORISED, USER RETURNED TO TEAM SELECT PAGE
     }
     else if (response.status == 400){
-      alert("Sorry, our servers encountered an issue. Please try again later");
     }
     else {
       return response.json();
@@ -113,6 +142,29 @@ function getTaskFiles(){
   )
   .then(function(parsedJson) {
     populateTaskFiles(parsedJson);
+  })
+  .catch(error => console.log(error));
+}
+
+function deleteTask(){
+  fetch(host+"deleteTask", {
+    method: 'POST',
+    body: JSON.stringify({
+      "token": sessionStorage.getItem('token'),
+      "taskID": taskID
+    }),
+    headers:{
+      'Content-Type': 'application/json'
+    }
+  }).then(function(response) {
+    if (response.status == 401){ //DETECTS IF USER IS AUTHORISED
+      window.location.href = "../login" //IF UNAUTHORISED, USER RETURNED TO TEAM SELECT PAGE
+    }
+    else if (response.status == 400){
+    }
+    else {
+      window.location.href = "../app"
+    }
   })
   .catch(error => console.log(error));
 }
@@ -156,7 +208,7 @@ function populateMembers(members){
 }
 
 function showDelete(data){
-  if (data.containsSelf){
+  if (data.containsSelf || data.isAdmin){
     document.getElementById("delete").style.display = "inline-block";
   }
 }

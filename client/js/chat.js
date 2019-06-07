@@ -1,5 +1,6 @@
 document.getElementById('chat-button').addEventListener('click', toggleChat);
 document.getElementById('chat-close').addEventListener('click', toggleChat);
+let loadedMessages = false;
 
 /*-- TOGGLE CHAT --
 	DESCRIPTION: Makes the chat show when the user clicks the chat button
@@ -13,6 +14,9 @@ function toggleChat(){
   }
   else{
     chat.style.display = 'grid';
+    if (!loadedMessages) {
+      initChat();
+    }
   }
 }
 
@@ -23,7 +27,6 @@ let canSend = false;
 checkSend();
 
 document.getElementById('send-button').addEventListener('click',send);
-window.addEventListener('load',init);
 document.getElementById('message-input').addEventListener('input', checkSend)
 document.getElementById('message-input').addEventListener('keyup', function(event) {
     event.preventDefault();
@@ -61,14 +64,84 @@ function charLimitCheck(data){
   }
 }
 
+function getMessages(){
+  fetch(host+"messages", {
+    method: 'POST',
+    body: JSON.stringify({
+      "teamID": room,
+      "token": sessionStorage.getItem('token')
+    }),
+    headers:{
+      'Content-Type': 'application/json'
+    }
+  }).then(function(response) {
+    if (response.status == 401){ //DETECTS IF USER IS AUTHORISED
+      window.location.href = "../login" //IF UNAUTHORISED, USER RETURNED TO TEAM SELECT PAGE
+    }
+    else if (response.status == 400){
+      alert("Sorry, our servers couldn't fetch your chat messages");
+    }
+    else {
+      return response.json();
+    }
+  }
+  )
+  .then(function(parsedJson) {
+    populateMessages(parsedJson);
+  })
+  .catch(error => console.log(error));
+}
+
+function populateMessages(messages){
+  document.getElementById('messages').innerHTML = "";
+  for (message of messages){
+    if (message.messageType == "txt"){
+      if (message.isSelf == "true") {
+        let e = document.createElement('div');
+        e.innerHTML = "<div class='message self'><p class='message-text'></p></div>";
+        e.getElementsByClassName("message-text")[0].textContent = message.messageText;
+        document.getElementById('messages').appendChild(e.firstChild);
+      }
+      else {
+        let e = document.createElement('div');
+        e.innerHTML = "<div class='message'><img class='profile-pic' src='../img/makersealonly.svg' id='me3'><p class='message-text'></p><span class='message-info'>Anon</span></div>";
+        e.getElementsByClassName("message-text")[0].textContent = message.messageText;
+        e.getElementsByClassName("message-info")[0].textContent = message.name;
+        document.getElementById('messages').appendChild(e.firstChild);
+      }
+    }
+    else {
+      if (message.isSelf == "true") {
+        let e = document.createElement('div');
+        e.innerHTML = "<div class='message self'><img class='self-message-image'><span class='message-info'>Powered by GIPHY</span></div>";
+        e.getElementsByClassName("self-message-image")[0].src = message.messageText;
+        document.getElementById('messages').appendChild(e.firstChild);
+      }
+      else {
+        let e = document.createElement('div');
+        e.innerHTML = "<div class='message'><img class='profile-pic' src='../img/makersealonly.svg' id='me3'><img class='message-image'><span class='message-info'>Anon Powered by GIPHY</span></div>";
+        e.getElementsByClassName("message-image")[0].src = message.messageText;
+        e.getElementsByClassName("message-info")[0].textContent = message.name + " Powered by GIPHY";
+        document.getElementById('messages').appendChild(e.firstChild);
+      }
+    }
+  }
+  document.getElementById('messages').scrollTo(0,document.getElementById('messages').scrollHeight);
+}
+
 /*-- charLimitCheck --
 	DESCRIPTION: establishes a socket connection to our chat server
 	PARAMS: nothing
 	RETURNS: nothing
 */
-function init(){
+function initChat(){
+  getMessages();
+  loadedMessages = true;
   socket.connect();
-  socket.emit('joinroom', room);
+  socket.emit('joinroom', {
+    room: room,
+    user: sessionStorage.getItem('token')
+  });
 }
 
 /*-- sendImage --

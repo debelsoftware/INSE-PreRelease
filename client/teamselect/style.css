@@ -76,6 +76,10 @@ hr{
   border-left: 10px solid #2eb0ff;
   border-right: 10px solid #2eb0ff;
 }
+.disabled{
+  opacity: 0.3;
+
+}
 button{
   background-color: #2eb0ff;
   padding: 7px;
@@ -99,6 +103,9 @@ input{
   border: none;
   border-bottom: 2px solid #2eb0ff;
   outline: none;
+}
+input:disabled{
+  background-color: white;
 }
 .large-logo{
   margin: 30px auto 30px auto;

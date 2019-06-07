@@ -1,3 +1,4 @@
+const url = new URL(window.location);
 /*-- onSignIn --
 	DESCRIPTION: gets the user details after they have signed into google
 	PARAMS: googleUser
@@ -17,5 +18,10 @@ function onSignIn(googleUser) {
   sessionStorage.setItem('fname', profile.getGivenName());
   sessionStorage.setItem('lname', profile.getFamilyName());
   sessionStorage.setItem('email', profile.getEmail());
-  window.location.href = "../teamselect"
+  if (url.searchParams.get("invite") != null) {
+    window.location.href = `../teamselect?invite=${url.searchParams.get("invite")}`
+  }
+  else {
+    window.location.href = "../teamselect"
+  }
 };

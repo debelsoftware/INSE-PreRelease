@@ -2,6 +2,7 @@
 window.addEventListener("load", init);
 document.getElementById("username").addEventListener("click", signOut);
 document.getElementById("join-button").addEventListener("click", joinTeam);
+const url = new URL(window.location);
 
 const token = sessionStorage.getItem('token');
 
@@ -16,7 +17,6 @@ function init(){
   });
   document.getElementById('username').textContent = sessionStorage.getItem('name'); //gets the users name from local storage
   getRegistered();
-  getTeams();
 }
 
 /*-- getRegistered --
@@ -45,7 +45,25 @@ function getRegistered(){
 */
 function checkRegistered(data){
   if (data.isRegistered == false){
-    window.location.href = "../register";
+    if (url.searchParams.get("invite") != null){
+      window.location.href = `../register?invite=${url.searchParams.get("invite")}`;
+    }
+    else {
+      window.location.href = "../register";
+    }
+  }
+  else {
+    handleInvites();
+  }
+}
+
+function handleInvites(){
+  if (url.searchParams.get("invite") != null){
+    document.getElementById('join-id').value = url.searchParams.get("invite");
+    joinTeam();
+  }
+  else {
+    getTeams();
   }
 }
 
@@ -85,6 +103,10 @@ function errorCatch(err){
 	RETURNS: nothing
 */
 function populateTeams(teams){
+  document.getElementById('join-id').disabled = false;
+  document.getElementById('join-button').disabled = false;
+  document.getElementById('join-button').classList.remove('disabled')
+  document.getElementById('join-id').classList.remove('disabled')
   let teamsbox = document.getElementById('teams');
   teamsbox.innerHTML = "";
   if (teams.length == 0){
@@ -137,7 +159,12 @@ function joinTeam(){
     }
   }).then(function(response) {
     if (response.status == 400){
-      showError("Sorry, that didn't work. Make sure you've entered the ID of an active group and try again","okay, will do")
+      if (url.searchParams.get("invite") != null){
+        window.location.href = "../teamselect";
+      }
+      else {
+        showError("Sorry, that didn't work. Make sure you've entered the ID of an active group and try again","okay, will do");
+      }
     }
     else {
       window.location.href = "../teamselect";
