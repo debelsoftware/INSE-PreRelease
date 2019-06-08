@@ -113,7 +113,6 @@ textarea{
   text-align: center;
   margin: 20px;
 }
-
 .input-data{
   width: 90%;
   max-width: 300px;
@@ -139,7 +138,6 @@ textarea{
   border-radius:5px;
   background-color: transparent;
 }
-
 main button{
   background-color: var(--secondaryColor);
   border: 0;
@@ -153,7 +151,9 @@ main button{
 main button:hover{
   cursor: pointer;
 }
-
+button:disabled{
+  opacity: 0.4
+}
 #cancel{
   background-color: var(--mainColor);
   border: 0;

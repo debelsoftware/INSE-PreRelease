@@ -147,6 +147,7 @@ function getTaskFiles(){
 }
 
 function deleteTask(){
+  document.getElementById("delete").disabled = true;
   fetch(host+"deleteTask", {
     method: 'POST',
     body: JSON.stringify({

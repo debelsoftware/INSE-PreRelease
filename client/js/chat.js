@@ -1,5 +1,3 @@
-document.getElementById('chat-button').addEventListener('click', toggleChat);
-document.getElementById('chat-close').addEventListener('click', toggleChat);
 let loadedMessages = false;
 
 /*-- TOGGLE CHAT --
@@ -23,7 +21,7 @@ function toggleChat(){
 let socket = io.connect('https://makerapi.host');
 let room = localStorage.getItem("team");
 let canSend = false;
-
+createChatUI();
 checkSend();
 
 document.getElementById('send-button').addEventListener('click',send);
@@ -127,6 +125,42 @@ function populateMessages(messages){
     }
   }
   document.getElementById('messages').scrollTo(0,document.getElementById('messages').scrollHeight);
+}
+
+function createChatUI(){
+  const chatWindow = document.createElement('div');
+  const closeButton = document.createElement('button');
+  const chatTitle = document.createElement('h3');
+  const messageContainer = document.createElement('div');
+  const chatWindowBottom = document.createElement('div');
+  const chatInput = document.createElement('input');
+  const chatSend = document.createElement('button');
+  const chatButton = document.createElement('img');
+  chatButton.src = "../img/chat.svg";
+  chatButton.id = "chat-button";
+  chatWindow.id = "chat";
+  chatWindow.classList.add('chat-popup');
+  closeButton.id = "chat-close"
+  closeButton.textContent = "X";
+  chatTitle.textContent = "Group Chat (Beta)";
+  messageContainer.id = "messages";
+  messageContainer.classList.add('messages');
+  chatWindowBottom.classList.add('chat-bottom');
+  chatInput.id = "message-input";
+  chatInput.placeholder = "Type your message here";
+  chatInput.classList.add('chat-text');
+  chatSend.id = "send-button";
+  chatSend.textContent = "Send";
+  chatWindow.appendChild(closeButton);
+  chatWindow.appendChild(chatTitle);
+  chatWindow.appendChild(messageContainer);
+  chatWindowBottom.appendChild(chatInput);
+  chatWindowBottom.appendChild(chatSend);
+  chatWindow.appendChild(chatWindowBottom);
+  document.body.appendChild(chatButton);
+  document.body.appendChild(chatWindow);
+  document.getElementById('chat-button').addEventListener('click', toggleChat);
+  document.getElementById('chat-close').addEventListener('click', toggleChat);
 }
 
 /*-- charLimitCheck --

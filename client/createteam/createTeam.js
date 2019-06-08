@@ -12,6 +12,7 @@ function createTeam(){
   let name = document.getElementById('name').value;
   let validationResults = validateTeamInputs(name);
   if (validationResults == "pass") {
+    document.getElementById('create-button').disabled = true;
     fetch(host+"createteam", {
       method: 'POST',
       body: JSON.stringify({
@@ -23,7 +24,7 @@ function createTeam(){
       }
     }).then(function(response) {
       if (response.status == 401){ //DETECTS IF USER IS AUTHORISED
-        window.location.href = "../teamselect" //IF UNAUTHORISED, USER RETURNED TO TEAM SELECT PAGE
+        window.location.href = "../login" //IF UNAUTHORISED, USER RETURNED TO TEAM SELECT PAGE
       }
       else if (response.status == 400){
         alert("Sorry, our servers encountered an issue. Please try again later");
@@ -49,9 +50,6 @@ function validateTeamInputs(name){
   const regex = /^[a-zA-Z0-9\s]+$/g
   if (name.length == 0) {
     return "Please give your team a name";
-  }
-  else if (!name.match(regex)) {
-    return "Name must not have special characters";
   }
   else if (name.length>20) {
     return "name must be less than 20 characters";

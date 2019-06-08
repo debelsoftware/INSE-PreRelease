@@ -195,6 +195,7 @@ function createTask(){
   let timestamp = new Date(finalDate).getTime();
   let validationResults = validateInputs(name,details,date);
   if (validationResults == "pass") {
+    document.getElementById('create-task-button').disabled = true;
     fetch(host+"createtask", {
       method: 'POST',
       body: JSON.stringify({
@@ -216,6 +217,7 @@ function createTask(){
       }
       else if (response.status == 400){
         alert("Sorry, our servers encountered an issue. Please try again later");
+        document.getElementById('create-task-button').disabled = false;
       }
       else {
         window.location.href = "../app"

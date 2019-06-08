@@ -92,6 +92,9 @@ p{
   font-family: 'gilroy-extrabold';
   width: 100px;
 }
+#create-button:disabled{
+  opacity: 0.4
+}
 #register-buttons{
   margin-top: 15px;
 }

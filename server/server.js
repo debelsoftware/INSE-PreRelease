@@ -1040,9 +1040,6 @@ function validateTeamInputs(name){
   if (name.length == 0) {
     return "Please fill out both inputs";
   }
-  else if (!name.match(regex)) {
-    return "Name must not have special characters";
-  }
   else if (name.length>20) {
     return "name must be less than 20 characters";
   }

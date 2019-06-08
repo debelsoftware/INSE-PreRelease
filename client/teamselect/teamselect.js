@@ -114,17 +114,31 @@ function populateTeams(teams){
   }
   else {
     for (team of teams){
-      if (team.isAdmin == 1){
-        teamsbox.innerHTML += "<div class='team admin' onclick='goToTeam(`"+team.teamID+"`)'>"+team.name+"<p id='teamID'>"+team.teamID+"</p></div>";
-      }
-      else if (team.verified == 1){
-        teamsbox.innerHTML += "<div class='team' onclick='goToTeam(`"+team.teamID+"`)'>"+team.name+"<p id='teamID'>"+team.teamID+"</p></div>";
-      }
-      else {
-        teamsbox.innerHTML += "<div class='team unverified' onclick='goToTeam(null)'>"+team.name+"<p id='teamID'>PENDING VERIFICATION</p></div>";
-      }
+      teamsbox.appendChild(createTeamMenuItem(team));
     }
   }
+}
+
+function createTeamMenuItem(team){
+  const teamContainer = document.createElement('div');
+  const idP = document.createElement('p');
+  idP.id = "teamID"
+  idP.textContent = team.teamID;
+  teamContainer.textContent = team.name;
+  teamContainer.addEventListener('click', function(){goToTeam(team.teamID)});
+  teamContainer.appendChild(idP);
+  if (team.isAdmin == 1){
+    teamContainer.classList.add('team');
+    teamContainer.classList.add('admin');
+  }
+  else if (team.verified == 1){
+    teamContainer.classList.add('team');
+  }
+  else {
+    teamContainer.classList.add('team');
+    teamContainer.classList.add('unverified');
+  }
+  return teamContainer
 }
 
 /*-- goToTeam --
