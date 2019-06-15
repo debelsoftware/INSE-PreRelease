@@ -20,6 +20,7 @@
 }
 html{
   background-color: #F8FAFF;
+  height: 100%;
   margin: 0;
   padding: 0;
   text-align: center;
@@ -189,10 +190,11 @@ main{
   text-align: left;
   padding: 20px;
   position: fixed;
-  bottom: 35px;
+  bottom: 32px;
   right: 35px;
   z-index: 999;
   margin: auto;
+  min-width: 280px;
   max-width: 350px;
   height: 400px;
   border-top: 15px solid var(--mainColor);

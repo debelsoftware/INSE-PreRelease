@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <link rel="apple-touch-icon" sizes="180x180" href="../icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../icons/favicon-16x16.png">
+    <link rel="manifest" href="../icons/site.webmanifest">
+    <link rel="mask-icon" href="../icons/safari-pinned-tab.svg" color="#2eb0ff">
+    <link rel="shortcut icon" href="../icons/favicon.ico">
+    <meta name="msapplication-TileColor" content="#2eb0ff">
+    <meta name="msapplication-config" content="../icons/browserconfig.xml">
+    <meta name="theme-color" content="#2eb0ff">
+    <link rel="stylesheet" href="../css/loading.css">
+    <link rel="stylesheet" href="./style.css">
+    <meta name="google-signin-scope" content="profile">
+    <meta name="google-signin-client_id" content="353118485015-qerafpisj7krrpuhsuivb7066j3q06d0.apps.googleusercontent.com">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <title>Team Maker - Select your team</title>
+  </head>
+  <body>
+    <img class="large-logo" src="../img/makertextonly.svg" alt="">
+    <div class="login-box">
+      <p>Logged in as <span id="username"></span></p>
+      <h1>Your Teams</h1>
+      <div id="teams">
+        <img src="../img/loading.svg" alt="">
+        <p>Finding your teams, just a sec...</p>
+      </div>
+      <hr>
+      <h3>Join a team</h3>
+      <input type="text" id="join-id" name="" disabled class="disabled" placeholder="Team ID eg. team_maker2019" value="">
+      <button disabled type="button" id="join-button" class="disabled" name="button">Join</button>
+      <p id="sub">To create a team, <a href="../createteam"><span>click here</span></a></p>
+      <p id="sub">Want to delete your account? <a href="../delete-account">Delete my account</a></p>
+    </div>
+    <div class="error-box" id="error-box">
+      <img src="../img/error.gif" alt="">
+      <h3 id="error-msg">Error message here</h3>
+      <button type="button" name="button" onclick="closeError()" id="error-btn">okay</button>
+    </div>
+    <script src="../js/pace.min.js" charset="utf-8"></script>
+    <script src="../js/maker.js" charset="utf-8"></script>
+    <script src="./teamselect.js" charset="utf-8"></script>
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js"></script>
+    <script>
+      window.addEventListener("load", function(){
+        window.cookieconsent.initialise({
+          "palette": {
+            "popup": {
+              "background": "#383b75"
+            },
+            "button": {
+              "background": "#f1d600"
+            }
+          }
+        })
+      });
+    </script>
+  </body>
+</html>

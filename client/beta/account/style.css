@@ -1,0 +1,32 @@
+.card a{
+  background-color: #2eb0ff;
+  border: 0;
+  border-radius: 3px;
+  margin: 0 10px 20px 20px;
+  padding: 10px;
+  color: white;
+  font-family: 'gilroy-extrabold';
+  display: inline-block;
+  text-decoration: none;
+}
+.confirm{
+  margin: 0 20px 20px 20px;
+  padding: 0 0 10px 0;
+}
+.confirm input{
+  padding: 8px;
+}
+.confirm p{
+  font-size: 12px;
+  margin: 0;
+}
+#delete-account{
+  display: inline-block;
+  border: 0;
+  border-radius: 3px;
+  margin: 5px 0 5px 0;
+  padding: 10px;
+  color: white;
+  font-family: 'gilroy-extrabold';
+  background-color: #ed4e4e;
+}

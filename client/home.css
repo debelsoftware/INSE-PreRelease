@@ -1,0 +1,117 @@
+main{
+  text-align: center;
+  margin-top: 10px;
+}
+.youtube{
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  z-index: 999999999999;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px)
+}
+.youtube iframe{
+  position: absolute;
+  top:0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  max-width: 1080px;
+  max-height: 1920px;
+  width: 80%;
+  height: 50%;
+}
+.youtube button{
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  padding: 10px;
+  border: none;
+  background-color: white;
+  font-family: 'gilroy-extrabold';
+  color: var(--mainColor);
+  font-size: 20px;
+  border-radius: 5px;
+}
+.pic-and-text{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: ;
+  grid-template-areas: ". .";
+  grid-gap: 20px;
+  width: 80%;
+  margin: 40px auto 80px auto;
+}
+.pic-and-text>img{
+  width: 100%;
+}
+.pt-text{
+  text-align: left;
+}
+.pt-image{
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: right;
+}
+.top-banner{
+  background-image: url('./img/heroimg.svg');
+  background-position: bottom;
+  background-size: cover;
+  background-repeat: no-repeat;
+  margin: auto;
+}
+.banner-contain{
+  display: inline-block;
+  margin: 20vh auto 30vh auto;
+}
+.banner-contain>h1{
+  margin: 20px;
+  font-size: 7vh;
+  color: white;
+}
+.banner-contain button{
+  background-color: var(--secondaryColor);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border: 0;
+  border-radius: 3px;
+  display: inline-block;
+  margin: 10px 20px 10px 20px;
+  padding: 20px 30px 20px 30px;
+  color: white;
+  font-size: 2vh;
+  font-family: 'gilroy-extrabold';
+  text-decoration: none;
+}
+button:hover{
+  cursor: pointer;
+}
+#pt-image1{
+  background-image: url('./img/teaching.svg');
+}
+#pt-image2{
+  background-image: url('./img/brainstorming.svg');
+  background-position: top;
+}
+#pt-image3{
+  background-image: url('./img/board.svg');
+}
+#pt-image4{
+  background-image: url('./img/sealmountain.svg');
+}
+footer{
+  margin-bottom: 50px;
+}
+
+@media (max-width: 780px){
+  .pic-and-text{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas: "." ".";
+    grid-gap: 20px;
+  }
+}

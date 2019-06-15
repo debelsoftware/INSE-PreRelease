@@ -1,0 +1,142 @@
+@import url('https://fonts.googleapis.com/css?family=Lato|Maven+Pro:700|Roboto');
+@font-face {
+    font-family: 'gilroy-extrabold';
+    src: url('../fonts/gilroy-extrabold-webfont.woff2') format('woff2'),
+         url('../fonts/gilroy-extrabold-webfont.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+}
+/*
+
+    font-family: 'Roboto', sans-serif;
+    font-family: 'Maven Pro', sans-serif;
+    font-family: 'Lato', sans-serif;
+
+*/
+html{
+  background-color: #F8FAFF;
+  background: url("../img/heroimg.svg") no-repeat center center fixed;
+  background-size: cover;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  text-align: center;
+}
+body{
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  text-align: center;
+}
+h1{
+  font-family: 'gilroy-extrabold';
+  color: #2f4054;
+}
+h3{
+  font-family: 'gilroy-extrabold';
+  color: #2f4054;
+}
+p{
+  font-family: 'Roboto', sans-serif;
+  color: #2f4054;
+}
+hr{
+  border: 0;
+  border-top: 1px solid rgba(0,0,0,0.1);
+  width: 80%;
+}
+button{
+  background-color: #ed4e4e;
+  padding: 7px;
+  border-radius: 5px;
+  border: none;
+  color: white;
+  font-family: 'gilroy-extrabold';
+  outline: none;
+}
+button:hover{
+  cursor: pointer;
+}
+input{
+  max-width: 200px;
+  width: 50%;
+  padding: 5px;
+  font-family: 'Roboto', sans-serif;
+  color: #2f4054;
+  margin-bottom: 10px;
+  border: none;
+  border-bottom: 2px solid #ed4e4e;
+  outline: none;
+}
+input:disabled{
+  background-color: white;
+}
+.large-logo{
+  margin: 30px auto 30px auto;
+  width: 70%;
+  max-width: 300px;
+}
+.login-box{
+  background-color: white;
+  padding: 20px;
+  width: 70%;
+  max-width: 450px;
+  margin: 5px auto 30px auto;
+  border-radius: 5px;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+}
+#sub{
+  color: #707070;
+  font-size: 12px;
+  margin-top: 30px;
+}
+span{
+  font-weight: bold;
+}
+span:hover{
+  cursor: pointer;
+}
+#colourGrade{
+  position: fixed;
+  width: 100%;
+  z-index: 0;
+  left: 0;
+  bottom: 0;
+}
+@keyframes error {
+  0%{
+    top: -100vh;
+  }
+  100%{
+    top: 50px;
+  }
+}
+.error-box{
+  display: none;
+  position: fixed;
+  animation-name: error;
+  animation-duration: 0.5s;
+  animation-fill-mode: both;
+  animation-timing-function: ease-in-out;
+  top: 30px;
+  left: 0;
+  right: 0;
+  width: 90%;
+  max-width: 550px;
+  margin: auto;
+  background-color: white;
+  border-radius: 3px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  border-top: 10px solid #2f4054;
+}
+.error-box img{
+  width: 100px;
+  margin: 0;
+}
+.error-box h3{
+  margin: 0 10px 0 10px;
+}
+#error-btn{
+  margin: 10px;
+  width: auto;
+}

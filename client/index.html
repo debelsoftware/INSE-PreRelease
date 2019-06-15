@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
     <link rel="apple-touch-icon" sizes="180x180" href="./icons/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="./icons/favicon-32x32.png">
@@ -12,30 +11,96 @@
     <meta name="msapplication-TileColor" content="#2eb0ff">
     <meta name="msapplication-config" content="./icons/browserconfig.xml">
     <meta name="theme-color" content="#2eb0ff">
-    <link rel="stylesheet" href="./style.css">
-    <title>BETA WARNING</title>
+    <link rel="stylesheet" href="./css/master.css">
+    <link rel="stylesheet" href="./home.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Team Maker</title>
   </head>
   <body>
-    <img class="large-logo" src="./img/makertextonly.svg" alt="">
-    <div class="login-box">
-      <h1>Beta is for devs only</h1>
-      <p>USE AT YOUR OWN RISK IF YOU ARE NOT A TEAM MAKER DEVELOPER</p>
-      <p id="support">Support: seal@teammaker.app</p>
+    <nav class="desktop-nav">
+      <div class="navigation">
+        <img id="menu-icon" src="./img/menu.svg" alt="">
+        <img src="./img/makerlogo.svg" class="nav-logo" alt="Team Maker Logo">
+      </div>
+    </nav>
+    <nav id="mobile-nav" class="mobile-nav">
+      <button type="button" id="close-menu" class="mobile-nav-exit" name="button">Close</button>
+    </nav>
+    <div id="youtube-vid" onclick="closeVid()" class="youtube">
+      <iframe src="https://www.youtube.com/embed/0ER33pWE2ZI" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
-    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css" />
-    <script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js"></script>
-    <script>
-      window.addEventListener("load", function(){
-      window.cookieconsent.initialise({
-        "palette": {
-          "popup": {
-            "background": "#383b75"
-          },
-          "button": {
-            "background": "#f1d600"
-          }
-        }
-      })});
-    </script>
+    <div class="top-banner">
+      <div class="banner-contain">
+        <h1>Coming Soon.</h1>
+        <button onclick="openVid()">Watch Demo</button>
+      </div>
+    </div>
+    <main>
+      <h1>Why use Maker?</h1>
+      <div class="pic-and-text">
+        <div class="pt-image" id="pt-image1"></div>
+        <div class="pt-text">
+          <h1>Designed by students for students</h1>
+          <p>We are a team of computing students at the University Of Portsmouth who enjoy developing tools that other students will actually find useful.</p>
+        </div>
+      </div>
+      <div class="pic-and-text">
+        <div class="pt-image" id="pt-image2"></div>
+        <div class="pt-text">
+          <h1>Packed with features</h1>
+          <p>we're constantly adding new features. Have an idea for the site? We'd love to hear it and potentially add it (obviously we'll credit you)</p>
+        </div>
+      </div>
+      <div class="pic-and-text">
+        <div class="pt-image" id="pt-image3"></div>
+        <div class="pt-text">
+          <h1>100% Free</h1>
+          <p>We don't charge for any of our features so you and your workgroup can get started without spending a penny.</p>
+        </div>
+      </div>
+      <div class="pic-and-text">
+        <div class="pt-image" id="pt-image4"></div>
+        <div class="pt-text">
+          <h1>More seal representation than competitors</h1>
+          <p>We are proud to support seal representation in online education software.</p>
+        </div>
+      </div>
+    </main>
+    <footer>
+      <h2>Feel free to contact us about anything at seal@teammaker.app</h2>
+    </footer>
   </body>
+  <script type="text/javascript">
+    document.getElementById('menu-icon').addEventListener('click', openMobileNav)
+    document.getElementById('close-menu').addEventListener('click', closeMobileNav)
+    function openMobileNav(){
+      const nav = document.getElementById('mobile-nav');
+      nav.style.display = "block";
+    }
+    function closeMobileNav(){
+      const nav = document.getElementById('mobile-nav');
+      nav.style.display = "none";
+    }
+    function openVid(){
+      document.getElementById('youtube-vid').style.display = "block"
+    }
+    function closeVid(){
+      document.getElementById('youtube-vid').style.display = "none"
+    }
+  </script>
+  <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css" />
+  <script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js"></script>
+  <script>
+    window.addEventListener("load", function(){
+    window.cookieconsent.initialise({
+      "palette": {
+        "popup": {
+          "background": "#383b75"
+        },
+        "button": {
+          "background": "#f1d600"
+        }
+      }
+    })});
+  </script>
 </html>
