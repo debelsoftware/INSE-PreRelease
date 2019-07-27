@@ -10,7 +10,8 @@ const client = new OAuth2Client('353118485015-qerafpisj7krrpuhsuivb7066j3q06d0.a
 const randomColor = require('randomcolor');
 const shortid = require('shortid');
 const FastRateLimit = require("fast-ratelimit").FastRateLimit;
-var messageLimiter = new FastRateLimit({
+const emailer = require('./modules/emailer');
+const messageLimiter = new FastRateLimit({
   threshold : 10,
   ttl       : 60
 });
@@ -38,10 +39,10 @@ let connection;
 
 function handleDisconnect() {
   connection = mysql.createConnection({
-  	host: 'makerapi.host',
-  	user: 'remote',
+  	host: '212.47.240.232',
+  	user: 'nodeconnect',
   	database: 'MAKER',
-  	password: 'makerssecretrock',
+  	password: '5PpRv3MYWCFTPhAJ7cAPa6e2TeD6YKECxMpZmms5Ksh8zNAJTW2rjQkcvDVUPkBgfcv2XJzxZ2uNy7yVA8ur4kWUxeRWC8BQ2Exs',
   	multipleStatements: true,
   	supportBigNumbers: true
   });
@@ -84,6 +85,7 @@ app.use(function(req, res, next) {
 });
 
 // --------------- ROUTES -----------------
+app.get('/status', getStatus);
 app.post('/userteams', getUserTeams);
 app.post('/tasks', getTasks);
 app.post('/taskdetails', getTaskDetails);
@@ -125,11 +127,16 @@ async function verify(token) {
     let userid = payload['sub'];
     let profilePic = payload['picture'];
     let name = payload['name']
-    return [userid, profilePic, name, payload];
+    let email = payload['email']
+    return [userid, profilePic, name, payload, email];
   }
   catch(e){
     return "error"
   }
+}
+
+function getStatus(req, res, next){
+  res.json('🔴 Running on: Vigorous Johnson');
 }
 
 /*-- getRegistered --
@@ -176,6 +183,7 @@ async function register(req, res, next){
 	        res.sendStatus(400);
 	      }
 	      else {
+          emailer.sendEmailNotif(googleData[4],googleData[2]).catch(console.error);
 	        res.sendStatus(200);
 	      }
 	    }
