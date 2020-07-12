@@ -22,5 +22,4 @@ Helium standalone version needs to be installed. The /scripts/ folder and subfol
 * **Dan Backhouse UP848710: danbprojects** - *Client Side HTML, CSS, Database and Testing*
 * **Harvey Eaton UP857995: hje99** - *Client Side HTML, CSS and JS*
 * **Paul Ockwell UP862504: PaulOckwell** - *Server and Client Side JS*
-* **Lingxiang Zou UP855349: zoulingxiang123** - *Client Side HTML and CSS*
 * **Matt Jeal UP834942: Mattdinio** - *client side HTML, CSS, Database and Testing*
