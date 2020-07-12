@@ -1,7 +1,6 @@
 # Team Maker | A Group Management Web App
 
 A web application to allow for team management and work collaboration.
-Live Demo: https://teammaker.app/beta/login
 
 ## Getting Started
 
