@@ -9,7 +9,7 @@ async function sendEmailNotif(address, username){
     secure: true,
     auth: {
       user: "notifications-noreply@teammaker.app",
-      pass: "^G,l+&27D6S_"
+      pass: "REDACTED"
     },
     tls: {
     // do not fail on invalid certs

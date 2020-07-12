@@ -6,7 +6,7 @@ const https = require('https');
 const mysql = require('mysql2');
 const bodyParser = require('body-parser');
 const {OAuth2Client} = require('google-auth-library');
-const client = new OAuth2Client('353118485015-qerafpisj7krrpuhsuivb7066j3q06d0.apps.googleusercontent.com');
+const client = new OAuth2Client('REDACTED');
 const randomColor = require('randomcolor');
 const shortid = require('shortid');
 const FastRateLimit = require("fast-ratelimit").FastRateLimit;
@@ -42,7 +42,7 @@ function handleDisconnect() {
   	host: '212.47.240.232',
   	user: 'nodeconnect',
   	database: 'MAKER',
-  	password: '5PpRv3MYWCFTPhAJ7cAPa6e2TeD6YKECxMpZmms5Ksh8zNAJTW2rjQkcvDVUPkBgfcv2XJzxZ2uNy7yVA8ur4kWUxeRWC8BQ2Exs',
+  	password: 'REDACTED',
   	multipleStatements: true,
   	supportBigNumbers: true
   });
